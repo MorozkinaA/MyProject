@@ -1,0 +1,40 @@
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+             xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+    <g:VerticalPanel>
+        <g:HorizontalPanel horizontalAlignment="right" spacing="10">
+            <g:Button ui:field="cart" text="Корзина"/>
+            <g:Button ui:field="login" text="Вход"/>
+        </g:HorizontalPanel>
+        <g:HorizontalPanel>
+            <g:VerticalPanel spacing="10">
+
+                <g:VerticalPanel spacing="5">
+                    <g:Label text="Цена"/>
+                    <g:HorizontalPanel spacing="5">
+                        <g:Label text="от: "/>
+                        <g:TextBox ui:field="minPriceBox"/>
+                        <g:Label text=" руб."/>
+                    </g:HorizontalPanel>
+                    <g:HorizontalPanel spacing="5">
+                        <g:Label text="до: "/>
+                        <g:TextBox ui:field="maxPriceBox"/>
+                        <g:Label text=" руб."/>
+                    </g:HorizontalPanel>
+                </g:VerticalPanel>
+
+                <g:VerticalPanel spacing="5">
+                    <g:Label text="Жанры:"/>
+                    <g:ListBox ui:field="genreList"/>
+                </g:VerticalPanel>
+
+                <g:VerticalPanel spacing="5">
+                    <g:Label text="Описание: "/>
+                    <g:CheckBox ui:field="withPhoto" text="С фото"/>
+                </g:VerticalPanel>
+
+                <g:Button ui:field="sort" text="Сортировать"/>
+            </g:VerticalPanel>
+            <g:Grid ui:field="booksGrid"/>
+        </g:HorizontalPanel>
+    </g:VerticalPanel>
+</ui:UiBinder>
