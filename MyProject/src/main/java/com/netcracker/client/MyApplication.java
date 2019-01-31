@@ -7,6 +7,6 @@ import com.netcracker.client.views.MainView;
 
 public class MyApplication implements EntryPoint {
     public void onModuleLoad() {
-        RootPanel.get("gwtContainer").add(new LoginView());
+        RootPanel.get("gwtContainer").add(new MainView());
     }
 }
