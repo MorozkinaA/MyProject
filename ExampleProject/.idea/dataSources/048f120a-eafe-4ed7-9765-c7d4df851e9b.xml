@@ -43,8 +43,8 @@
     <schema id="14" parent="1" name="NN_14">
       <ObjectId>429</ObjectId>
       <CreatedTimestamp>2019-01-15.20:50:59</CreatedTimestamp>
-      <ModifiedTimestamp>2019-01-30.21:46:48</ModifiedTimestamp>
-      <IntrospectionTimestamp>2019-02-01.21:00:41</IntrospectionTimestamp>
+      <ModifiedTimestamp>2019-02-04.03:14:23</ModifiedTimestamp>
+      <IntrospectionTimestamp>2019-02-04.03:15:49</IntrospectionTimestamp>
       <Current>1</Current>
       <Visible>1</Visible>
     </schema>
@@ -286,7 +286,7 @@
     <table id="90" parent="14" name="BOOKS">
       <ObjectId>79956</ObjectId>
       <CreatedTimestamp>2019-01-15.21:04:48</CreatedTimestamp>
-      <ModifiedTimestamp>2019-01-20.22:30:18</ModifiedTimestamp>
+      <ModifiedTimestamp>2019-02-04.03:14:23</ModifiedTimestamp>
       <TemporaryPreserve>1</TemporaryPreserve>
     </table>
     <table id="91" parent="14" name="BOOKS_AUTHORS">
@@ -28272,7 +28272,7 @@
     </column>
     <column id="4093" parent="90" name="TITLE">
       <Position>2</Position>
-      <DataType>VARCHAR2(50 byte)|0s</DataType>
+      <DataType>VARCHAR2(100 byte)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
     <column id="4094" parent="90" name="PUBLISHER">
@@ -28287,7 +28287,7 @@
     </column>
     <column id="4096" parent="90" name="DESCRIPTION">
       <Position>5</Position>
-      <DataType>VARCHAR2(1000 byte)|0s</DataType>
+      <DataType>VARCHAR2(1500 byte)|0s</DataType>
     </column>
     <column id="4097" parent="90" name="BOOK_PRICE">
       <Position>6</Position>
@@ -28300,9 +28300,17 @@
     </column>
     <column id="4099" parent="90" name="PHOTO">
       <Position>8</Position>
-      <DataType>VARCHAR2(200 byte)|0s</DataType>
+      <DataType>VARCHAR2(500 byte)|0s</DataType>
     </column>
-    <index id="4100" parent="90" name="BOOKS_KEY">
+    <column id="4100" parent="90" name="AUTHOR_ID">
+      <Position>9</Position>
+      <DataType>NUMBER(*)|0s</DataType>
+    </column>
+    <column id="4101" parent="90" name="GENRE_ID">
+      <Position>10</Position>
+      <DataType>NUMBER(*)|0s</DataType>
+    </column>
+    <index id="4102" parent="90" name="BOOKS_KEY">
       <ObjectId>79957</ObjectId>
       <CreatedTimestamp>2019-01-15.21:05:16</CreatedTimestamp>
       <ModifiedTimestamp>2019-01-15.21:05:16</ModifiedTimestamp>
@@ -28310,24 +28318,40 @@
       <ColNames>BOOK_ID</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="4101" parent="90" name="BOOKS_PK">
+    <key id="4103" parent="90" name="BOOKS_PK">
       <ModifiedTimestamp>2019-01-15.21:05:16</ModifiedTimestamp>
       <ColNames>BOOK_ID</ColNames>
       <InitiallyDeferred>1</InitiallyDeferred>
       <UnderlyingIndexName>BOOKS_KEY</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <column id="4102" parent="91" name="BOOK_ID">
+    <foreign-key id="4104" parent="90" name="BOOKSAUTHOR_FK">
+      <ModifiedTimestamp>2019-02-03.22:54:22</ModifiedTimestamp>
+      <ColNames>AUTHOR_ID</ColNames>
+      <RefSchemaName>NN_14</RefSchemaName>
+      <RefTableName>AUTHORS</RefTableName>
+      <RefKeyName>AUTHORS_PK</RefKeyName>
+      <OnDelete>restrict</OnDelete>
+    </foreign-key>
+    <foreign-key id="4105" parent="90" name="BOOKSGENRE_FK">
+      <ModifiedTimestamp>2019-02-03.22:51:57</ModifiedTimestamp>
+      <ColNames>GENRE_ID</ColNames>
+      <RefSchemaName>NN_14</RefSchemaName>
+      <RefTableName>GENRES</RefTableName>
+      <RefKeyName>GENRES_PK</RefKeyName>
+      <OnDelete>restrict</OnDelete>
+    </foreign-key>
+    <column id="4106" parent="91" name="BOOK_ID">
       <Position>1</Position>
       <DataType>NUMBER(*)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="4103" parent="91" name="AUTHOR_ID">
+    <column id="4107" parent="91" name="AUTHOR_ID">
       <Position>2</Position>
       <DataType>NUMBER(*)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <foreign-key id="4104" parent="91" name="AITHORSBOOKS_FK">
+    <foreign-key id="4108" parent="91" name="AITHORSBOOKS_FK">
       <ModifiedTimestamp>2019-01-20.20:34:12</ModifiedTimestamp>
       <ColNames>BOOK_ID</ColNames>
       <RefSchemaName>NN_14</RefSchemaName>
@@ -28335,7 +28359,7 @@
       <RefKeyName>BOOKS_PK</RefKeyName>
       <OnDelete>restrict</OnDelete>
     </foreign-key>
-    <foreign-key id="4105" parent="91" name="BOOKSAUTHORS_FK">
+    <foreign-key id="4109" parent="91" name="BOOKSAUTHORS_FK">
       <ModifiedTimestamp>2019-01-20.20:34:31</ModifiedTimestamp>
       <ColNames>AUTHOR_ID</ColNames>
       <RefSchemaName>NN_14</RefSchemaName>
@@ -28343,17 +28367,17 @@
       <RefKeyName>AUTHORS_PK</RefKeyName>
       <OnDelete>restrict</OnDelete>
     </foreign-key>
-    <column id="4106" parent="92" name="BOOK_ID">
+    <column id="4110" parent="92" name="BOOK_ID">
       <Position>1</Position>
       <DataType>NUMBER(*)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="4107" parent="92" name="GENRE_ID">
+    <column id="4111" parent="92" name="GENRE_ID">
       <Position>2</Position>
       <DataType>NUMBER(*)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <foreign-key id="4108" parent="92" name="GENRESBOOKS_FK">
+    <foreign-key id="4112" parent="92" name="GENRESBOOKS_FK">
       <ModifiedTimestamp>2019-01-20.20:38:07</ModifiedTimestamp>
       <ColNames>BOOK_ID</ColNames>
       <RefSchemaName>NN_14</RefSchemaName>
@@ -28361,7 +28385,7 @@
       <RefKeyName>BOOKS_PK</RefKeyName>
       <OnDelete>restrict</OnDelete>
     </foreign-key>
-    <foreign-key id="4109" parent="92" name="BOOKSGENRES_FK">
+    <foreign-key id="4113" parent="92" name="BOOKSGENRES_FK">
       <ModifiedTimestamp>2019-01-20.20:35:51</ModifiedTimestamp>
       <ColNames>GENRE_ID</ColNames>
       <RefSchemaName>NN_14</RefSchemaName>
@@ -28369,22 +28393,22 @@
       <RefKeyName>GENRES_PK</RefKeyName>
       <OnDelete>restrict</OnDelete>
     </foreign-key>
-    <column id="4110" parent="93" name="CART_ID">
+    <column id="4114" parent="93" name="CART_ID">
       <Position>1</Position>
       <DataType>NUMBER(*)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="4111" parent="93" name="CUSTOMER">
+    <column id="4115" parent="93" name="CUSTOMER">
       <Position>2</Position>
       <DataType>NUMBER(*)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="4112" parent="93" name="BOOKS_PRICE">
+    <column id="4116" parent="93" name="BOOKS_PRICE">
       <Position>3</Position>
       <DataType>FLOAT(*)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="4113" parent="93" name="CARTS_PK">
+    <index id="4117" parent="93" name="CARTS_PK">
       <ObjectId>80295</ObjectId>
       <CreatedTimestamp>2019-01-21.00:29:01</CreatedTimestamp>
       <ModifiedTimestamp>2019-01-21.00:29:01</ModifiedTimestamp>
@@ -28392,14 +28416,14 @@
       <ColNames>CART_ID</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="4114" parent="93" name="CARTS_PK">
+    <key id="4118" parent="93" name="CARTS_PK">
       <ModifiedTimestamp>2019-01-21.00:29:01</ModifiedTimestamp>
       <ColNames>CART_ID</ColNames>
       <InitiallyDeferred>1</InitiallyDeferred>
       <UnderlyingIndexName>CARTS_PK</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="4115" parent="93" name="CUSTOMER_FK">
+    <foreign-key id="4119" parent="93" name="CUSTOMER_FK">
       <ModifiedTimestamp>2019-01-24.19:43:00</ModifiedTimestamp>
       <ColNames>CUSTOMER</ColNames>
       <RefSchemaName>NN_14</RefSchemaName>
@@ -28407,22 +28431,22 @@
       <RefKeyName>CUSTOMERS_PK</RefKeyName>
       <OnDelete>restrict</OnDelete>
     </foreign-key>
-    <column id="4116" parent="94" name="CART_ID">
+    <column id="4120" parent="94" name="CART_ID">
       <Position>1</Position>
       <DataType>NUMBER(*)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="4117" parent="94" name="BOOK_ID">
+    <column id="4121" parent="94" name="BOOK_ID">
       <Position>2</Position>
       <DataType>NUMBER(*)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="4118" parent="94" name="BOOKS_QTY">
+    <column id="4122" parent="94" name="BOOKS_QTY">
       <Position>3</Position>
       <DataType>NUMBER(*)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <foreign-key id="4119" parent="94" name="BOOKSCARTS_FK">
+    <foreign-key id="4123" parent="94" name="BOOKSCARTS_FK">
       <ModifiedTimestamp>2019-01-21.00:30:20</ModifiedTimestamp>
       <ColNames>CART_ID</ColNames>
       <RefSchemaName>NN_14</RefSchemaName>
@@ -28430,7 +28454,7 @@
       <RefKeyName>CARTS_PK</RefKeyName>
       <OnDelete>restrict</OnDelete>
     </foreign-key>
-    <foreign-key id="4120" parent="94" name="CARTSBOOKS_FK">
+    <foreign-key id="4124" parent="94" name="CARTSBOOKS_FK">
       <ModifiedTimestamp>2019-01-21.00:29:59</ModifiedTimestamp>
       <ColNames>BOOK_ID</ColNames>
       <RefSchemaName>NN_14</RefSchemaName>
@@ -28438,21 +28462,21 @@
       <RefKeyName>BOOKS_PK</RefKeyName>
       <OnDelete>restrict</OnDelete>
     </foreign-key>
-    <column id="4121" parent="95" name="CUSTOMER_ID">
+    <column id="4125" parent="95" name="CUSTOMER_ID">
       <Position>1</Position>
       <DataType>NUMBER(*)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="4122" parent="95" name="USERS">
+    <column id="4126" parent="95" name="USERS">
       <Position>2</Position>
       <DataType>NUMBER(*)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="4123" parent="95" name="DISCOUNT">
+    <column id="4127" parent="95" name="DISCOUNT">
       <Position>3</Position>
       <DataType>NUMBER(*)|0s</DataType>
     </column>
-    <index id="4124" parent="95" name="CUSTOMERS_PK">
+    <index id="4128" parent="95" name="CUSTOMERS_PK">
       <ObjectId>80289</ObjectId>
       <CreatedTimestamp>2019-01-20.23:45:12</CreatedTimestamp>
       <ModifiedTimestamp>2019-01-20.23:45:12</ModifiedTimestamp>
@@ -28460,14 +28484,14 @@
       <ColNames>CUSTOMER_ID</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="4125" parent="95" name="CUSTOMERS_PK">
+    <key id="4129" parent="95" name="CUSTOMERS_PK">
       <ModifiedTimestamp>2019-01-20.23:45:12</ModifiedTimestamp>
       <ColNames>CUSTOMER_ID</ColNames>
       <InitiallyDeferred>1</InitiallyDeferred>
       <UnderlyingIndexName>CUSTOMERS_PK</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="4126" parent="95" name="USER_FK">
+    <foreign-key id="4130" parent="95" name="USER_FK">
       <ModifiedTimestamp>2019-01-20.23:47:45</ModifiedTimestamp>
       <ColNames>USERS</ColNames>
       <RefSchemaName>NN_14</RefSchemaName>
@@ -28475,17 +28499,17 @@
       <RefKeyName>USERS_PK</RefKeyName>
       <OnDelete>restrict</OnDelete>
     </foreign-key>
-    <column id="4127" parent="96" name="CUSTOMER_ID">
+    <column id="4131" parent="96" name="CUSTOMER_ID">
       <Position>1</Position>
       <DataType>NUMBER(*)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="4128" parent="96" name="ADRESS_ID">
+    <column id="4132" parent="96" name="ADRESS_ID">
       <Position>2</Position>
       <DataType>NUMBER(*)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <foreign-key id="4129" parent="96" name="ADRESSESCUSTOMERS_FK">
+    <foreign-key id="4133" parent="96" name="ADRESSESCUSTOMERS_FK">
       <ModifiedTimestamp>2019-01-20.23:50:00</ModifiedTimestamp>
       <ColNames>CUSTOMER_ID</ColNames>
       <RefSchemaName>NN_14</RefSchemaName>
@@ -28493,7 +28517,7 @@
       <RefKeyName>CUSTOMERS_PK</RefKeyName>
       <OnDelete>restrict</OnDelete>
     </foreign-key>
-    <foreign-key id="4130" parent="96" name="CUSTOMERSADRESSES_FK">
+    <foreign-key id="4134" parent="96" name="CUSTOMERSADRESSES_FK">
       <ModifiedTimestamp>2019-01-20.23:49:34</ModifiedTimestamp>
       <ColNames>ADRESS_ID</ColNames>
       <RefSchemaName>NN_14</RefSchemaName>
@@ -28501,17 +28525,17 @@
       <RefKeyName>ADRESSES_PK</RefKeyName>
       <OnDelete>restrict</OnDelete>
     </foreign-key>
-    <column id="4131" parent="97" name="GENRE_ID">
+    <column id="4135" parent="97" name="GENRE_ID">
       <Position>1</Position>
       <DataType>NUMBER(*)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="4132" parent="97" name="GENRE_NAME">
+    <column id="4136" parent="97" name="GENRE_NAME">
       <Position>2</Position>
       <DataType>VARCHAR2(20 byte)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="4133" parent="97" name="GENRES_PK">
+    <index id="4137" parent="97" name="GENRES_PK">
       <ObjectId>80285</ObjectId>
       <CreatedTimestamp>2019-01-20.20:30:50</CreatedTimestamp>
       <ModifiedTimestamp>2019-01-20.20:30:50</ModifiedTimestamp>
@@ -28519,54 +28543,54 @@
       <ColNames>GENRE_ID</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="4134" parent="97" name="GENRES_PK">
+    <key id="4138" parent="97" name="GENRES_PK">
       <ModifiedTimestamp>2019-01-20.20:30:50</ModifiedTimestamp>
       <ColNames>GENRE_ID</ColNames>
       <InitiallyDeferred>1</InitiallyDeferred>
       <UnderlyingIndexName>GENRES_PK</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <column id="4135" parent="98" name="ADRESS_ID">
+    <column id="4139" parent="98" name="ADRESS_ID">
       <Position>1</Position>
       <DataType>NUMBER(10 digit)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="4136" parent="99" name="AUTHOR_ID">
+    <column id="4140" parent="99" name="AUTHOR_ID">
       <Position>1</Position>
       <DataType>NUMBER(10 digit)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="4137" parent="100" name="BOOK_ID">
+    <column id="4141" parent="100" name="BOOK_ID">
       <Position>1</Position>
       <DataType>NUMBER(10 digit)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="4138" parent="101" name="GENRE_ID">
+    <column id="4142" parent="101" name="GENRE_ID">
       <Position>1</Position>
       <DataType>NUMBER(10 digit)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="4139" parent="102" name="ORDER_ID">
+    <column id="4143" parent="102" name="ORDER_ID">
       <Position>1</Position>
       <DataType>NUMBER(*)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="4140" parent="102" name="CART">
+    <column id="4144" parent="102" name="CART">
       <Position>2</Position>
       <DataType>NUMBER(*)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="4141" parent="102" name="ORDER_DATE">
+    <column id="4145" parent="102" name="ORDER_DATE">
       <Position>3</Position>
       <DataType>DATE|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="4142" parent="102" name="ORDER_STATUS">
+    <column id="4146" parent="102" name="ORDER_STATUS">
       <Position>4</Position>
       <DataType>VARCHAR2(20 byte)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="4143" parent="102" name="ORDERS_PK">
+    <index id="4147" parent="102" name="ORDERS_PK">
       <ObjectId>80297</ObjectId>
       <CreatedTimestamp>2019-01-21.00:32:37</CreatedTimestamp>
       <ModifiedTimestamp>2019-01-21.00:32:37</ModifiedTimestamp>
@@ -28574,14 +28598,14 @@
       <ColNames>ORDER_ID</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="4144" parent="102" name="ORDERS_PK">
+    <key id="4148" parent="102" name="ORDERS_PK">
       <ModifiedTimestamp>2019-01-21.00:32:37</ModifiedTimestamp>
       <ColNames>ORDER_ID</ColNames>
       <InitiallyDeferred>1</InitiallyDeferred>
       <UnderlyingIndexName>ORDERS_PK</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="4145" parent="102" name="CART_FK">
+    <foreign-key id="4149" parent="102" name="CART_FK">
       <ModifiedTimestamp>2019-01-21.00:33:07</ModifiedTimestamp>
       <ColNames>CART</ColNames>
       <RefSchemaName>NN_14</RefSchemaName>
@@ -28589,37 +28613,37 @@
       <RefKeyName>CARTS_PK</RefKeyName>
       <OnDelete>restrict</OnDelete>
     </foreign-key>
-    <column id="4146" parent="103" name="USER_ID">
+    <column id="4150" parent="103" name="USER_ID">
       <Position>1</Position>
       <DataType>NUMBER(*)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="4147" parent="103" name="ROLE">
+    <column id="4151" parent="103" name="ROLE">
       <Position>2</Position>
       <DataType>VARCHAR2(20 byte)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="4148" parent="103" name="USER_NAME">
+    <column id="4152" parent="103" name="USER_NAME">
       <Position>3</Position>
       <DataType>VARCHAR2(20 byte)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="4149" parent="103" name="USER_SURNAME">
+    <column id="4153" parent="103" name="USER_SURNAME">
       <Position>4</Position>
       <DataType>VARCHAR2(30 byte)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="4150" parent="103" name="USER_LOGIN">
+    <column id="4154" parent="103" name="USER_LOGIN">
       <Position>5</Position>
       <DataType>VARCHAR2(30 byte)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="4151" parent="103" name="USER_PASSWORD">
+    <column id="4155" parent="103" name="USER_PASSWORD">
       <Position>6</Position>
       <DataType>NUMBER(*)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="4152" parent="103" name="USERS_PK">
+    <index id="4156" parent="103" name="USERS_PK">
       <ObjectId>80288</ObjectId>
       <CreatedTimestamp>2019-01-20.23:44:29</CreatedTimestamp>
       <ModifiedTimestamp>2019-01-20.23:44:29</ModifiedTimestamp>
@@ -28627,7 +28651,7 @@
       <ColNames>USER_ID</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="4153" parent="103" name="USERS_PK">
+    <key id="4157" parent="103" name="USERS_PK">
       <ModifiedTimestamp>2019-01-20.23:44:29</ModifiedTimestamp>
       <ColNames>USER_ID</ColNames>
       <InitiallyDeferred>1</InitiallyDeferred>

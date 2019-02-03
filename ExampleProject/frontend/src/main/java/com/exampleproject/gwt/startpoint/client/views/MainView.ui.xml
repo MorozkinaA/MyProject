@@ -2,7 +2,7 @@
              xmlns:g='urn:import:com.google.gwt.user.client.ui'>
     <g:VerticalPanel>
         <g:HorizontalPanel spacing="10">
-            <g:cell width="1000px" horizontalAlignment="ALIGN_RIGHT">
+            <g:cell width="1100px" horizontalAlignment="ALIGN_RIGHT">
                 <g:Button ui:field="cart" text="Корзина"/>
             </g:cell>
         </g:HorizontalPanel>
@@ -10,7 +10,7 @@
             <g:VerticalPanel spacing="10">
 
                 <g:VerticalPanel spacing="5">
-                    <g:Label text="Цена"/>
+                    <g:Label text="Цена:"/>
                     <g:HorizontalPanel spacing="5">
                         <g:Label text="от: "/>
                         <g:TextBox ui:field="minPriceBox"/>
@@ -35,7 +35,7 @@
 
                 <g:Button ui:field="sort" text="Сортировать"/>
             </g:VerticalPanel>
-            <g:VerticalPanel ui:field="gridPanel"/>
+            <g:VerticalPanel ui:field="booksTable"/>
         </g:HorizontalPanel>
     </g:VerticalPanel>
 </ui:UiBinder>

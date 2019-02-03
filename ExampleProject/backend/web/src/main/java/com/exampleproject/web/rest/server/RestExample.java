@@ -1,6 +1,8 @@
 package com.exampleproject.web.rest.server;
 
 import com.exampleproject.engine.DataBaseTest;
+import com.exampleproject.model.shared.Book;
+import com.exampleproject.model.shared.Genre;
 import com.exampleproject.model.shared.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -15,12 +17,12 @@ import java.util.List;
 @RestController
 public class RestExample {
 
-    private final ApplicationContext applicationContext;
+    //private final ApplicationContext applicationContext;
     private final DataBaseTest dataBaseTest;
 
     @Autowired
-    public RestExample(ApplicationContext applicationContext, DataBaseTest dataBaseTest) {
-        this.applicationContext = applicationContext;
+    public RestExample(DataBaseTest dataBaseTest) {
+        //this.applicationContext = applicationContext;
         this.dataBaseTest = dataBaseTest;
     }
 
@@ -37,8 +39,8 @@ public class RestExample {
 
     @RequestMapping("/genres")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<String> selectGenres(){
-        List<String> genres = null;
+    public List<Genre> selectGenres(){
+        List<Genre> genres = null;
         try{
             genres = dataBaseTest.selectGenres();
         }catch (Exception ex){
@@ -47,6 +49,18 @@ public class RestExample {
         return genres;
     }
 
+    @RequestMapping("/books")
+    public List<Book> selectBooks(){
+        return dataBaseTest.selectBooks();
+    }
+
+    @RequestMapping("/sort")
+    public List<Book> sortBooks(List<String> params) {
+        return dataBaseTest.sortBooks(params);
+    }
+
+
+
 //    @RequestMapping("/test/{someText}")
 //    public TestDto testAdditional(@PathVariable String someText) {
 //        TestDto dto = createDto();
@@ -54,8 +68,8 @@ public class RestExample {
 //        return dto;
 //    }
 //
-//    protected TestDto createDto() {
-//        return applicationContext.getBean(TestDto.class);
+//    protected Book createBook() {
+//        return applicationContext.getBean(Book.class);
 //    }
 
 }

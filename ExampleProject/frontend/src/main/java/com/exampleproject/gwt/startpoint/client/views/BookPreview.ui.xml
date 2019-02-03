@@ -1,0 +1,15 @@
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+             xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+    <g:FlowPanel>
+        <g:VerticalPanel spacing="2">
+            <g:Image ui:field="photo"/>
+            <g:Label ui:field="title" width=""/>
+            <g:Label ui:field="author"/>
+            <g:Label ui:field="price" />
+            <g:VerticalPanel spacing="5">
+                <g:Button ui:field="buyBook" text="Добавить в корзину"/>
+                <g:Button ui:field="moreInfo" text="Подробнее"/>
+            </g:VerticalPanel>
+        </g:VerticalPanel>
+    </g:FlowPanel>
+</ui:UiBinder>

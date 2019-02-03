@@ -1,5 +1,6 @@
 package com.exampleproject.model.shared;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -16,8 +17,12 @@ public class Book {
     private float price;
     private int qty;
     private String photoUrl;
-    private List<String> authors;
-    private List<String> genres;
+    private String authorName;
+    private String authorSurname;
+    private String genre;
+
+    public Book() {
+    }
 
     public String getTitle() {
         return title;
@@ -75,19 +80,27 @@ public class Book {
         this.photoUrl = photoUrl;
     }
 
-    public List<String> getAuthors() {
-        return authors;
+    public String getAuthorName() {
+        return authorName;
     }
 
-    public void setAuthors(List<String> authors) {
-        this.authors = authors;
+    public void setAuthorName(String authorName) {
+        this.authorName = authorName;
     }
 
-    public List<String> getGenres() {
-        return genres;
+    public String getAuthorSurname() {
+        return authorSurname;
     }
 
-    public void setGenres(List<String> genres) {
-        this.genres = genres;
+    public void setAuthorSurname(String authorSurname) {
+        this.authorSurname = authorSurname;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
     }
 }
