@@ -54,7 +54,7 @@ public class LoginView extends Composite{
             errorLabel.setText("");
             List<String> logInfo = new ArrayList<>();
             logInfo.add(loginBox.getText());
-            logInfo.add(passwordBox.getText());
+            logInfo.add(Integer.toString(passwordBox.getText().hashCode()));
             client.isLogged(logInfo, new MethodCallback<User>() {
                 @Override
                 public void onFailure(Method method, Throwable throwable) {
@@ -63,8 +63,13 @@ public class LoginView extends Composite{
 
                 @Override
                 public void onSuccess(Method method, User user) {
-                    RootPanel.get().clear();
-                    RootPanel.get().add(new MainView());
+                    if(user == null){
+                        errorLabel.setText("Пожалуйста, введите корректные логин и пароль");
+                    }
+                    else{
+                        RootPanel.get().clear();
+                        RootPanel.get().add(new MainView());
+                    }
                 }
             });
         }

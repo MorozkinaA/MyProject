@@ -1,13 +1,14 @@
 package com.exampleproject.web.rest.server;
 
-import com.exampleproject.engine.DataBaseTest;
+
+import com.exampleproject.database.service.BookService;
+import com.exampleproject.database.service.UserService;
 import com.exampleproject.model.shared.Book;
+import com.exampleproject.model.shared.Customer;
 import com.exampleproject.model.shared.Genre;
 import com.exampleproject.model.shared.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
@@ -17,59 +18,46 @@ import java.util.List;
 @RestController
 public class RestExample {
 
-    //private final ApplicationContext applicationContext;
-    private final DataBaseTest dataBaseTest;
+
+    BookService bookService;
+    UserService userService;
 
     @Autowired
-    public RestExample(DataBaseTest dataBaseTest) {
-        //this.applicationContext = applicationContext;
-        this.dataBaseTest = dataBaseTest;
+    public RestExample(BookService bookService, UserService userService){
+        this.bookService = bookService;
+        this.userService = userService;
     }
 
     @RequestMapping("/login")
-    public User isLogged(List<String> logInfo){
-        User user = null;
-        try{
-            user = dataBaseTest.isLogged(logInfo);
-        }catch (Exception ex){
-            return null;
-        }
-        return user;
+    public User isLogged(@RequestBody List<String> logInfo) {
+        return userService.isLogged(logInfo);
     }
 
+
     @RequestMapping("/genres")
-    @Produces(MediaType.APPLICATION_JSON)
     public List<Genre> selectGenres(){
-        List<Genre> genres = null;
-        try{
-            genres = dataBaseTest.selectGenres();
-        }catch (Exception ex){
-            return null;
-        }
-        return genres;
+        return bookService.selectGenres();
     }
 
     @RequestMapping("/books")
     public List<Book> selectBooks(){
-        return dataBaseTest.selectBooks();
+        return bookService.selectBooks();
+    }
+
+    @RequestMapping("/addCustomer")
+    public void createCustomer(@RequestBody Customer customer){
+        userService.createCustomer(customer);
     }
 
     @RequestMapping("/sort")
-    public List<Book> sortBooks(List<String> params) {
-        return dataBaseTest.sortBooks(params);
+    public List<Book> sortBooks(@RequestBody List<String> params) {
+        return bookService.sortBooks(params);
     }
 
+    @RequestMapping("/canSign")
+    public boolean loginIsFree(@RequestBody String login){
+        return userService.loginIsFree(login);
+    }
 
-
-//    @RequestMapping("/test/{someText}")
-//    public TestDto testAdditional(@PathVariable String someText) {
-//        TestDto dto = createDto();
-//        dto.setMessage("It's a test string from server and you've given me " + someText);
-//        return dto;
-//    }
-//
-//    protected Book createBook() {
-//        return applicationContext.getBean(Book.class);
-//    }
 
 }

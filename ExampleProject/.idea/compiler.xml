@@ -7,7 +7,6 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="database" />
-        <module name="engine" />
         <module name="frontend" />
         <module name="shared" />
         <module name="warcompile" />
@@ -15,6 +14,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="engine" target="1.5" />
       <module name="fewwefewffew" target="1.8" />
       <module name="warbuild" target="1.5" />
     </bytecodeTargetLevel>

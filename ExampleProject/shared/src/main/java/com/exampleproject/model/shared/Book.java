@@ -1,27 +1,68 @@
 package com.exampleproject.model.shared;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Component
 @Scope(value = BeanDefinition.SCOPE_PROTOTYPE)
+@Entity
+@Table(name = "books")
 public class Book {
+    @Id
+    @Column(name = "book_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    protected int id;
+    @Column(name = "title")
     private String title;
+    @Column(name = "publisher")
     private String publisher;
+    @Column(name = "pages")
     private int pages;
+    @Column(name = "description")
     private String description;
+    @Column(name = "book_price")
     private float price;
+    @Column(name = "book_qty")
     private int qty;
+    @Column(name = "photo")
     private String photoUrl;
-    private String authorName;
-    private String authorSurname;
-    private String genre;
+    @OneToMany(mappedBy = "book", fetch = FetchType.EAGER)
+    private Set<Genre> genres;
+    @OneToMany(mappedBy = "book", fetch = FetchType.EAGER)
+    private Set<Author> authors;
+//    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+//    @JoinTable(name = "carts_books", joinColumns = @JoinColumn(name = "book_id"),
+//            inverseJoinColumns = @JoinColumn(name = "cart_id"))
+//    private Cart cart;
 
     public Book() {
+    }
+
+    public Book(String title, String publisher, int pages, String description, float price, int qty, String photoUrl, Set<Genre> genres, Set<Author> authors) {
+        this.title = title;
+        this.publisher = publisher;
+        this.pages = pages;
+        this.description = description;
+        this.price = price;
+        this.qty = qty;
+        this.photoUrl = photoUrl;
+        //this.genres = genres;
+        //this.authors = authors;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -80,27 +121,34 @@ public class Book {
         this.photoUrl = photoUrl;
     }
 
-    public String getAuthorName() {
-        return authorName;
+    public Set<Genre> getGenres() {
+        return genres;
     }
 
-    public void setAuthorName(String authorName) {
-        this.authorName = authorName;
+    public void setGenres(Set<Genre> genres) {
+        this.genres = genres;
     }
 
-    public String getAuthorSurname() {
-        return authorSurname;
+    public Set<Author> getAuthors() {
+        return authors;
     }
 
-    public void setAuthorSurname(String authorSurname) {
-        this.authorSurname = authorSurname;
+    public void setAuthors(Set<Author> authors) {
+        this.authors = authors;
     }
 
-    public String getGenre() {
-        return genre;
-    }
-
-    public void setGenre(String genre) {
-        this.genre = genre;
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", publisher='" + publisher + '\'' +
+                ", pages=" + pages +
+                ", description='" + description + '\'' +
+                ", price=" + price +
+                ", qty=" + qty +
+                ", photoUrl='" + photoUrl + '\'' +
+                ", genres=" + genres +
+                ", authors=" + authors ;
     }
 }

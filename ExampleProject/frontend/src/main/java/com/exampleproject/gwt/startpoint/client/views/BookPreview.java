@@ -41,7 +41,7 @@ public class BookPreview extends Composite {
         }
         photo.setPixelSize(150, 250);
         title.setText(book.getTitle());
-        author.setText(book.getAuthorName() + " " + book.getAuthorSurname());
+        author.setText(book.getAuthors().toString());
         price.setText(Float.toString(book.getPrice()) + " руб.");
 
         moreInfo.addClickHandler(new ClickHandler() {

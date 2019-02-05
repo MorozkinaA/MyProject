@@ -3,9 +3,7 @@ package com.exampleproject.gwt.startpoint.client.views;
 import com.exampleproject.gwt.startpoint.client.WorkerClient;
 import com.exampleproject.model.shared.Book;
 import com.exampleproject.model.shared.Genre;
-import com.exampleproject.model.shared.User;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.DivElement;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -89,6 +87,7 @@ public class MainView extends Composite {
         super();
         initWidget(ourUiBinder.createAndBindUi(this));
 
+        genreList.addItem("все");
         client.selectGenres(new MethodCallback<List<Genre>>() {
             @Override
             public void onFailure(Method method, Throwable throwable) {
@@ -104,7 +103,7 @@ public class MainView extends Composite {
         });
         genreList.setVisibleItemCount(1);
 
-        //grid = new Grid(4,5);
+        grid = new Grid(4,5);
         client.selectBooks(new MethodCallback<List<Book>>() {
             @Override
             public void onFailure(Method method, Throwable throwable) {
@@ -113,7 +112,7 @@ public class MainView extends Composite {
 
             @Override
             public void onSuccess(Method method, List<Book> list) {
-                int i = 0;
+                int i = 1;
                 for(int row = 0; row < grid.getRowCount(); row++){
                     for(int col = 0; col < grid.getColumnCount(); col++){
                         grid.setWidget(row, col, new BookPreview(list.get(i)));
