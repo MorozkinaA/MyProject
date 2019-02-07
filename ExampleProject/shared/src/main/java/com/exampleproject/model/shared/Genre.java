@@ -7,12 +7,15 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
+import java.util.Set;
 
 @Component
 @Scope(value = BeanDefinition.SCOPE_PROTOTYPE)
 @Entity
+//@Transactional
 @Table(name = "genres")
-@JsonIgnoreProperties({"book"})
+@JsonIgnoreProperties({"books"})
 public class Genre {
     @Id
     @Column(name = "genre_id")
@@ -20,10 +23,8 @@ public class Genre {
     private int id;
     @Column(name = "genre_name")
     private String genre;
-    @ManyToOne(fetch = FetchType.LAZY, optional = true)
-    @JoinTable(name = "books_genres", joinColumns = @JoinColumn(name = "genre_id"),
-            inverseJoinColumns = @JoinColumn(name = "book_id"))
-    private Book book;
+    @ManyToMany(mappedBy = "genres")
+    private Set<Book> books;
 
     public Genre() {
     }
@@ -48,18 +49,16 @@ public class Genre {
         this.genre = genre;
     }
 
-    public Book getBook() {
-        return book;
-    }
-
-    public void setBook(Book book) {
-        this.book = book;
-    }
+//    public Book getBook() {
+//        return book;
+//    }
+//
+//    public void setBook(Book book) {
+//        this.book = book;
+//    }
 
     @Override
     public String toString() {
-        return "Genre{" +
-                "genre='" + genre + '\'' +
-                '}';
+        return genre;
     }
 }

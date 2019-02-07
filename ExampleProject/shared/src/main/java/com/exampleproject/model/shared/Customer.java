@@ -1,6 +1,7 @@
 package com.exampleproject.model.shared;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -12,6 +13,7 @@ import java.util.Set;
 @Scope(value = BeanDefinition.SCOPE_PROTOTYPE)
 @Entity
 @Table(name = "customers")
+@JsonIgnoreProperties("adresses")
 public class Customer {
     @Id
     @Column(name = "customer_id")
@@ -24,7 +26,7 @@ public class Customer {
     private int discount;
     @Column(name = "customer_email")
     private String email;
-    @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "customers")
     private Set<Adress> adresses;
 
 

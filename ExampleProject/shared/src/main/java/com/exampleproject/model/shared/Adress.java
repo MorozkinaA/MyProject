@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Component
 @Scope(value = BeanDefinition.SCOPE_PROTOTYPE)
@@ -30,22 +31,21 @@ public class Adress {
     private int flat;
     @Column(name = "post_index")
     private String postIndex;
-    @ManyToOne(fetch = FetchType.EAGER, optional = true)
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "customers_adresses", joinColumns = @JoinColumn(name = "adress_id"),
             inverseJoinColumns = @JoinColumn(name = "customer_id"))
-    private Customer customer;
+    private Set<Customer> customers;
 
     public Adress() {
     }
 
-    public Adress(String country, String city, String street, String house, int flat, String postIndex, Customer customer) {
+    public Adress(String country, String city, String street, String house, int flat, String postIndex) {
         this.country = country;
         this.city = city;
         this.street = street;
         this.house = house;
         this.flat = flat;
         this.postIndex = postIndex;
-        this.customer = customer;
     }
 
     public int getId() {
@@ -104,12 +104,12 @@ public class Adress {
         this.postIndex = postIndex;
     }
 
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
+//    public Customer getCustomer() {
+//        return customer;
+//    }
+//
+//    public void setCustomer(Customer customer) {
+//        this.customer = customer;
+//    }
 
 }

@@ -33,7 +33,6 @@ public class RestExample {
         return userService.isLogged(logInfo);
     }
 
-
     @RequestMapping("/genres")
     public List<Genre> selectGenres(){
         return bookService.selectGenres();
@@ -59,5 +58,9 @@ public class RestExample {
         return userService.loginIsFree(login);
     }
 
+    @RequestMapping("/bookQty")
+    public Integer selectBookQty(@RequestBody Integer book_id){
+        return bookService.selectBookQty(book_id);
+    }
 
 }

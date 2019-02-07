@@ -5,10 +5,13 @@ import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 
+import java.util.Set;
+
 @Component
 @Entity
+//@Transactional
 @Table(name = "authors")
-@JsonIgnoreProperties({"book"})
+@JsonIgnoreProperties({"books"})
 public class Author {
     @Id
     @Column(name = "author_id")
@@ -18,10 +21,8 @@ public class Author {
     private String name;
     @Column(name = "author_surname")
     private String surname;
-    @ManyToOne(fetch = FetchType.LAZY, optional = true)
-    @JoinTable(name = "books_authors", joinColumns = @JoinColumn(name = "author_id"),
-            inverseJoinColumns = @JoinColumn(name = "book_id"))
-    private Book book;
+    @ManyToMany(mappedBy = "authors")
+    private Set<Book> books;
 
     public Author() {
     }
@@ -55,13 +56,13 @@ public class Author {
         this.surname = surname;
     }
 
-    public Book getBook() {
-        return book;
-    }
-
-    public void setBook(Book book) {
-        this.book = book;
-    }
+//    public Book getBook() {
+//        return book;
+//    }
+//
+//    public void setBook(Book book) {
+//        this.book = book;
+//    }
 
     @Override
     public String toString() {

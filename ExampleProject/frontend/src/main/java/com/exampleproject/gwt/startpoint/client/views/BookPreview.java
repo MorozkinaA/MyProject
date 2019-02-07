@@ -7,6 +7,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.*;
 
 
@@ -42,12 +43,15 @@ public class BookPreview extends Composite {
         photo.setPixelSize(150, 250);
         title.setText(book.getTitle());
         author.setText(book.getAuthors().toString());
-        price.setText(Float.toString(book.getPrice()) + " руб.");
+        price.setText(Float.toString(book.getPrice()) + " euro");
 
         moreInfo.addClickHandler(new ClickHandler() {
             @Override
             public void onClick(ClickEvent clickEvent) {
-                new BookInfoView(book);
+                BookInfoView bookInfoView = new BookInfoView(book);
+                int left = Window.getClientWidth()/ 4;
+                int top = Window.getClientHeight()/ 4;
+                bookInfoView.setPopupPosition(left, top);
             }
         });
     }

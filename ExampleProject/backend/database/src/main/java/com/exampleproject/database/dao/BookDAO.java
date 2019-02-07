@@ -9,4 +9,5 @@ public interface BookDAO {
     List<Genre> selectGenres();
     List<Book> selectBooks();
     List<Book> sortBooks(List<String> params);
+    Integer selectBookQty(Integer book_id);
 }

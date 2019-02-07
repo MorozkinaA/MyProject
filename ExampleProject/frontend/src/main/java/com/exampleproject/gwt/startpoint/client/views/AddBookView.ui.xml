@@ -1,0 +1,21 @@
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+             xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+    <g:VerticalPanel spacing="5">
+        <g:HorizontalPanel spacing="5">
+            <g:Label text="Title: "/>
+            <g:TextBox ui:field="titleBox"/>
+        </g:HorizontalPanel>
+        <g:HorizontalPanel spacing="5">
+            <g:Label text="Author's name: "/>
+            <g:TextBox ui:field="authorsNameBox"/>
+        </g:HorizontalPanel>
+        <g:HorizontalPanel spacing="5">
+            <g:Label text="Author's surname: "/>
+            <g:TextBox ui:field="authorsSurnameBox"/>
+        </g:HorizontalPanel>
+        <g:HorizontalPanel spacing="5">
+            <g:Label text="Genre: "/>
+            <g:TextBox ui:field="gebre"/>
+        </g:HorizontalPanel>
+    </g:VerticalPanel>
+</ui:UiBinder>

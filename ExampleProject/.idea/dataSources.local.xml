@@ -1,16 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="dataSourceStorageLocal">
-    <data-source name="@sql.edu-netcracker.com" uuid="048f120a-eafe-4ed7-9765-c7d4df851e9b">
-      <database-info product="Oracle" version="Oracle Database 11g Express Edition Release 11.2.0.2.0 - 64bit Production" jdbc-version="4.0" driver-name="Oracle JDBC driver" driver-version="12.1.0.2.0" dbms="ORACLE" exact-version="11.2.0.2.0" exact-driver-version="12.1">
-        <extra-name-characters>$#</extra-name-characters>
-        <identifier-quote-string>&quot;</identifier-quote-string>
-      </database-info>
-      <case-sensitivity plain-identifiers="upper" quoted-identifiers="exact" />
-      <secret-storage>master_key</secret-storage>
-      <user-name>NN_14</user-name>
-      <introspection-schemas>*:@,PUBLIC</introspection-schemas>
-    </data-source>
     <data-source name="postgres@localhost" uuid="42320b31-c409-48ee-953b-9149bcd87f17">
       <database-info product="PostgreSQL" version="11.1" jdbc-version="4.2" driver-name="PostgreSQL JDBC Driver" driver-version="42.2.2" dbms="POSTGRES" exact-version="11.1" exact-driver-version="42.2">
         <identifier-quote-string>&quot;</identifier-quote-string>

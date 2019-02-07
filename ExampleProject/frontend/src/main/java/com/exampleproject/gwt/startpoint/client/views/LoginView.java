@@ -12,6 +12,7 @@ import com.google.gwt.user.client.ui.*;
 import org.fusesource.restygwt.client.Method;
 import org.fusesource.restygwt.client.MethodCallback;
 
+import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +22,6 @@ public class LoginView extends Composite{
 
     private static LoginViewUiBinder ourUiBinder = GWT.create(LoginViewUiBinder.class);
 
-
     @UiField
     TextBox loginBox;
 
@@ -30,9 +30,6 @@ public class LoginView extends Composite{
 
     @UiField
     Label errorLabel;
-
-    @UiField
-    Button loginButton;
 
     private final WorkerClient client = GWT.create(WorkerClient.class);
 
@@ -68,11 +65,19 @@ public class LoginView extends Composite{
                     }
                     else{
                         RootPanel.get().clear();
-                        RootPanel.get().add(new MainView());
+                        RootPanel.get().add(new MainView(user));
                     }
                 }
             });
         }
+    }
+
+    final DialogBox dialogBox = new DialogBox();
+
+    @UiHandler("signUp")
+    void doOpenRegistrationView(ClickEvent event){
+        RootPanel.get().clear();
+        RootPanel.get().add(new CreateAccountView());
     }
 
     public LoginView() {

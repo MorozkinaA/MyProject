@@ -1,12 +1,16 @@
 package com.exampleproject.model.shared;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -14,6 +18,8 @@ import java.util.Set;
 @Scope(value = BeanDefinition.SCOPE_PROTOTYPE)
 @Entity
 @Table(name = "books")
+//@Transactional
+@JsonIgnoreProperties({"cart"})
 public class Book {
     @Id
     @Column(name = "book_id")
@@ -33,14 +39,20 @@ public class Book {
     private int qty;
     @Column(name = "photo")
     private String photoUrl;
-    @OneToMany(mappedBy = "book", fetch = FetchType.EAGER)
-    private Set<Genre> genres;
-    @OneToMany(mappedBy = "book", fetch = FetchType.EAGER)
+    @ManyToMany(cascade = {CascadeType.ALL})
+    //@Fetch(FetchMode.JOIN)
+    @JoinTable(name = "books_genres",
+    joinColumns = {@JoinColumn(name = "book_id")},
+    inverseJoinColumns = {@JoinColumn(name = "genre_id")})
+    private Set<Genre> genres = new HashSet<>();
+    @ManyToMany(cascade = {CascadeType.ALL})
+    //@Fetch(FetchMode.JOIN)
+    @JoinTable(name = "books_authors",
+            joinColumns = {@JoinColumn(name = "book_id")},
+            inverseJoinColumns = {@JoinColumn(name = "author_id")})
     private Set<Author> authors;
-//    @ManyToOne(fetch = FetchType.LAZY, optional = true)
-//    @JoinTable(name = "carts_books", joinColumns = @JoinColumn(name = "book_id"),
-//            inverseJoinColumns = @JoinColumn(name = "cart_id"))
-//    private Cart cart;
+    @ManyToMany(mappedBy = "books")
+    private Set<Cart> carts;
 
     public Book() {
     }

@@ -1,5 +1,5 @@
 function frontend(){
-  var $intern_0 = 'bootstrap', $intern_1 = 'begin', $intern_2 = 'gwt.codesvr.frontend=', $intern_3 = 'gwt.codesvr=', $intern_4 = 'frontend', $intern_5 = 'startup', $intern_6 = 'DUMMY', $intern_7 = 0, $intern_8 = 1, $intern_9 = 'iframe', $intern_10 = 'javascript:""', $intern_11 = 'position:absolute; width:0; height:0; border:none; left: -1000px;', $intern_12 = ' top: -1000px;', $intern_13 = 'CSS1Compat', $intern_14 = '<!doctype html>', $intern_15 = '', $intern_16 = '<html><head><\/head><body><\/body><\/html>', $intern_17 = 'undefined', $intern_18 = 'readystatechange', $intern_19 = 10, $intern_20 = 'script', $intern_21 = 'javascript', $intern_22 = 'Failed to load ', $intern_23 = 'moduleStartup', $intern_24 = 'scriptTagAdded', $intern_25 = 'moduleRequested', $intern_26 = 'meta', $intern_27 = 'name', $intern_28 = 'frontend::', $intern_29 = '::', $intern_30 = 'gwt:property', $intern_31 = 'content', $intern_32 = '=', $intern_33 = 'gwt:onPropertyErrorFn', $intern_34 = 'Bad handler "', $intern_35 = '" for "gwt:onPropertyErrorFn"', $intern_36 = 'gwt:onLoadErrorFn', $intern_37 = '" for "gwt:onLoadErrorFn"', $intern_38 = '#', $intern_39 = '?', $intern_40 = '/', $intern_41 = 'img', $intern_42 = 'clear.cache.gif', $intern_43 = 'baseUrl', $intern_44 = 'frontend.nocache.js', $intern_45 = 'base', $intern_46 = '//', $intern_47 = 'user.agent', $intern_48 = 'webkit', $intern_49 = 'safari', $intern_50 = 'msie', $intern_51 = 11, $intern_52 = 'ie10', $intern_53 = 9, $intern_54 = 'ie9', $intern_55 = 8, $intern_56 = 'ie8', $intern_57 = 'gecko', $intern_58 = 'gecko1_8', $intern_59 = 2, $intern_60 = 3, $intern_61 = 4, $intern_62 = 'selectingPermutation', $intern_63 = 'frontend.devmode.js', $intern_64 = '35527A56EF96B96B6052B51AA1163C7F', $intern_65 = '46C02CAFABA82A6369DFED51770586C0', $intern_66 = '62FD48AA27D02CD8F1AD08A26D9AE2BB', $intern_67 = '657988D78FD819A0C9456F7962617C94', $intern_68 = '66C8670B3D3780FD07A59D98961861E3', $intern_69 = ':', $intern_70 = '.cache.js', $intern_71 = 'loadExternalRefs', $intern_72 = 'end', $intern_73 = 'http:', $intern_74 = 'file:', $intern_75 = '_gwt_dummy_', $intern_76 = '__gwtDevModeHook:frontend', $intern_77 = 'Ignoring non-whitelisted Dev Mode URL: ', $intern_78 = ':moduleBase', $intern_79 = 'head';
+  var $intern_0 = 'bootstrap', $intern_1 = 'begin', $intern_2 = 'gwt.codesvr.frontend=', $intern_3 = 'gwt.codesvr=', $intern_4 = 'frontend', $intern_5 = 'startup', $intern_6 = 'DUMMY', $intern_7 = 0, $intern_8 = 1, $intern_9 = 'iframe', $intern_10 = 'javascript:""', $intern_11 = 'position:absolute; width:0; height:0; border:none; left: -1000px;', $intern_12 = ' top: -1000px;', $intern_13 = 'CSS1Compat', $intern_14 = '<!doctype html>', $intern_15 = '', $intern_16 = '<html><head><\/head><body><\/body><\/html>', $intern_17 = 'undefined', $intern_18 = 'readystatechange', $intern_19 = 10, $intern_20 = 'script', $intern_21 = 'javascript', $intern_22 = 'Failed to load ', $intern_23 = 'moduleStartup', $intern_24 = 'scriptTagAdded', $intern_25 = 'moduleRequested', $intern_26 = 'meta', $intern_27 = 'name', $intern_28 = 'frontend::', $intern_29 = '::', $intern_30 = 'gwt:property', $intern_31 = 'content', $intern_32 = '=', $intern_33 = 'gwt:onPropertyErrorFn', $intern_34 = 'Bad handler "', $intern_35 = '" for "gwt:onPropertyErrorFn"', $intern_36 = 'gwt:onLoadErrorFn', $intern_37 = '" for "gwt:onLoadErrorFn"', $intern_38 = '#', $intern_39 = '?', $intern_40 = '/', $intern_41 = 'img', $intern_42 = 'clear.cache.gif', $intern_43 = 'baseUrl', $intern_44 = 'frontend.nocache.js', $intern_45 = 'base', $intern_46 = '//', $intern_47 = 'user.agent', $intern_48 = 'webkit', $intern_49 = 'safari', $intern_50 = 'msie', $intern_51 = 11, $intern_52 = 'ie10', $intern_53 = 9, $intern_54 = 'ie9', $intern_55 = 8, $intern_56 = 'ie8', $intern_57 = 'gecko', $intern_58 = 'gecko1_8', $intern_59 = 2, $intern_60 = 3, $intern_61 = 4, $intern_62 = 'selectingPermutation', $intern_63 = 'frontend.devmode.js', $intern_64 = '1DB351A6766AFA03991AF78DD50D2354', $intern_65 = 'A10258812A972642FFC62EFC9DBEF2AA', $intern_66 = 'A56E9C5AF987E53753EC8521D86A39DA', $intern_67 = 'C55EA35BCF61BCCDAC424E8B02AD3203', $intern_68 = 'CC4D81E6E6779DE940B7F495F1C840FF', $intern_69 = ':', $intern_70 = '.cache.js', $intern_71 = 'link', $intern_72 = 'rel', $intern_73 = 'stylesheet', $intern_74 = 'href', $intern_75 = 'head', $intern_76 = 'loadExternalRefs', $intern_77 = 'gwt/standard/standard.css', $intern_78 = 'end', $intern_79 = 'http:', $intern_80 = 'file:', $intern_81 = '_gwt_dummy_', $intern_82 = '__gwtDevModeHook:frontend', $intern_83 = 'Ignoring non-whitelisted Dev Mode URL: ', $intern_84 = ':moduleBase';
   var $wnd = window;
   var $doc = document;
   sendStats($intern_0, $intern_1);
@@ -378,9 +378,9 @@ function frontend(){
     try {
       unflattenKeylistIntoAnswers([$intern_54], $intern_64);
       unflattenKeylistIntoAnswers([$intern_49], $intern_65);
-      unflattenKeylistIntoAnswers([$intern_58], $intern_66);
-      unflattenKeylistIntoAnswers([$intern_52], $intern_67);
-      unflattenKeylistIntoAnswers([$intern_56], $intern_68);
+      unflattenKeylistIntoAnswers([$intern_52], $intern_66);
+      unflattenKeylistIntoAnswers([$intern_56], $intern_67);
+      unflattenKeylistIntoAnswers([$intern_58], $intern_68);
       strongName = answers[computePropValue($intern_47)];
       var idx = strongName.indexOf($intern_69);
       if (idx != -1) {
@@ -398,8 +398,19 @@ function frontend(){
     if (!$wnd.__gwt_stylesLoaded) {
       $wnd.__gwt_stylesLoaded = {};
     }
-    sendStats($intern_71, $intern_1);
-    sendStats($intern_71, $intern_72);
+    function installOneStylesheet(stylesheetUrl){
+      if (!__gwt_stylesLoaded[stylesheetUrl]) {
+        var l = $doc.createElement($intern_71);
+        l.setAttribute($intern_72, $intern_73);
+        l.setAttribute($intern_74, computeUrlForResource(stylesheetUrl));
+        $doc.getElementsByTagName($intern_75)[$intern_7].appendChild(l);
+        __gwt_stylesLoaded[stylesheetUrl] = true;
+      }
+    }
+
+    sendStats($intern_76, $intern_1);
+    installOneStylesheet($intern_77);
+    sendStats($intern_76, $intern_78);
   }
 
   processMetas();
@@ -407,10 +418,10 @@ function frontend(){
   activeModules[$intern_4].moduleBase = frontend.__moduleBase;
   var filename = getCompiledCodeFilename();
   if ($wnd) {
-    var devModePermitted = !!($wnd.location.protocol == $intern_73 || $wnd.location.protocol == $intern_74);
+    var devModePermitted = !!($wnd.location.protocol == $intern_79 || $wnd.location.protocol == $intern_80);
     $wnd.__gwt_activeModules[$intern_4].canRedirect = devModePermitted;
     function supportsSessionStorage(){
-      var key = $intern_75;
+      var key = $intern_81;
       try {
         $wnd.sessionStorage.setItem(key, key);
         $wnd.sessionStorage.removeItem(key);
@@ -422,27 +433,27 @@ function frontend(){
     }
 
     if (devModePermitted && supportsSessionStorage()) {
-      var devModeKey = $intern_76;
+      var devModeKey = $intern_82;
       var devModeUrl = $wnd.sessionStorage[devModeKey];
       if (!/^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?\/.*$/.test(devModeUrl)) {
         if (devModeUrl && (window.console && console.log)) {
-          console.log($intern_77 + devModeUrl);
+          console.log($intern_83 + devModeUrl);
         }
         devModeUrl = $intern_15;
       }
       if (devModeUrl && !$wnd[devModeKey]) {
         $wnd[devModeKey] = true;
-        $wnd[devModeKey + $intern_78] = computeScriptBase();
+        $wnd[devModeKey + $intern_84] = computeScriptBase();
         var devModeScript = $doc.createElement($intern_20);
         devModeScript.src = devModeUrl;
-        var head = $doc.getElementsByTagName($intern_79)[$intern_7];
+        var head = $doc.getElementsByTagName($intern_75)[$intern_7];
         head.insertBefore(devModeScript, head.firstElementChild || head.children[$intern_7]);
         return false;
       }
     }
   }
   loadExternalStylesheets();
-  sendStats($intern_0, $intern_72);
+  sendStats($intern_0, $intern_78);
   installScript(filename);
   return true;
 }

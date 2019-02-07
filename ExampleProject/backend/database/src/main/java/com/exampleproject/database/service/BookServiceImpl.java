@@ -32,4 +32,8 @@ public class BookServiceImpl implements BookService {
     public List<Book> sortBooks(List<String> params) {
         return  bookDAO.sortBooks(params);
     }
+
+    public Integer selectBookQty(Integer book_id) {
+        return bookDAO.selectBookQty(book_id);
+    }
 }

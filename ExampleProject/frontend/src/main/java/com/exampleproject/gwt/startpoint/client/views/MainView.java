@@ -3,6 +3,7 @@ package com.exampleproject.gwt.startpoint.client.views;
 import com.exampleproject.gwt.startpoint.client.WorkerClient;
 import com.exampleproject.model.shared.Book;
 import com.exampleproject.model.shared.Genre;
+import com.exampleproject.model.shared.User;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -39,6 +40,12 @@ public class MainView extends Composite {
     @UiField
     VerticalPanel booksTable;
 
+    @UiField
+    Button cart;
+
+    @UiField
+    Button addBookButton;
+
     @UiHandler("cart")
     void doClickCart(ClickEvent event){
 
@@ -67,7 +74,7 @@ public class MainView extends Composite {
             @Override
             public void onSuccess(Method method, List<Book> list) {
                 grid.clear();
-                int i = 0;
+                int i = 1;
                 for(int row = 0; row < grid.getRowCount(); row++){
                     for(int col = 0; col < grid.getColumnCount(); col++){
                         grid.setWidget(row, col, new BookPreview(list.get(i)));
@@ -79,15 +86,27 @@ public class MainView extends Composite {
         });
     }
 
-    Grid grid = new Grid(4, 5);
+    @UiHandler("addBookButton")
+    void openAdditionView(ClickEvent event){
 
+    }
+
+    Grid grid = new Grid(4, 5);
+    List<Book> books = new ArrayList<>();
     private final WorkerClient client = GWT.create(WorkerClient.class);
 
-    public MainView(){
+    public MainView(User user){
         super();
         initWidget(ourUiBinder.createAndBindUi(this));
 
-        genreList.addItem("все");
+        if(user.getRole().equals("customer")){
+            cart.setVisible(true);   //cart is available only for customers
+        }
+        else if(user.getRole().equals("admin")){
+            addBookButton.setVisible(true);   //addition of book is available only for admins
+        }
+
+        genreList.addItem("all");
         client.selectGenres(new MethodCallback<List<Genre>>() {
             @Override
             public void onFailure(Method method, Throwable throwable) {
@@ -103,7 +122,6 @@ public class MainView extends Composite {
         });
         genreList.setVisibleItemCount(1);
 
-        grid = new Grid(4,5);
         client.selectBooks(new MethodCallback<List<Book>>() {
             @Override
             public void onFailure(Method method, Throwable throwable) {
@@ -112,21 +130,18 @@ public class MainView extends Composite {
 
             @Override
             public void onSuccess(Method method, List<Book> list) {
-                int i = 1;
+                int i = 0;
                 for(int row = 0; row < grid.getRowCount(); row++){
-                    for(int col = 0; col < grid.getColumnCount(); col++){
+                    for(int col = 0; col < grid.getColumnCount(); col++) {
                         grid.setWidget(row, col, new BookPreview(list.get(i)));
                         i++;
-
                     }
                 }
             }
         });
+
         grid.setCellSpacing(3);
         booksTable.add(grid);
-
-
-
 
     }
 }

@@ -1,6 +1,7 @@
 package com.exampleproject.database.dao;
 
 
+import com.exampleproject.model.shared.Cart;
 import com.exampleproject.model.shared.Customer;
 import com.exampleproject.model.shared.User;
 import org.hibernate.Criteria;
@@ -31,6 +32,7 @@ public class UserDAOImpl extends BasicDAO implements UserDAO {
         User user = customer.getUser();
         persist(user);
         persist(customer);
+        Cart cart = new Cart(customer, 0);
     }
 
     public boolean loginIsFree(String login) {
@@ -61,4 +63,9 @@ public class UserDAOImpl extends BasicDAO implements UserDAO {
         }
         return user;
     }
+//
+//    public Cart getCart(User user) {
+//        Criteria criteria = getSession().createCriteria(Cart.class);
+//
+//    }
 }
