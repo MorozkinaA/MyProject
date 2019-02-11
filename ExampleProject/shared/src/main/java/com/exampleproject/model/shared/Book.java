@@ -1,5 +1,6 @@
 package com.exampleproject.model.shared;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -39,13 +40,17 @@ public class Book {
     private int qty;
     @Column(name = "photo")
     private String photoUrl;
-    @ManyToMany(cascade = {CascadeType.ALL})
+//    @OneToMany(mappedBy = "book", fetch = FetchType.LAZY)
+//    private Set<Genre> genres;
+//    @OneToMany(mappedBy = "book", fetch = FetchType.LAZY)
+//    private Set<Author> authors;
+    @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
     //@Fetch(FetchMode.JOIN)
     @JoinTable(name = "books_genres",
     joinColumns = {@JoinColumn(name = "book_id")},
     inverseJoinColumns = {@JoinColumn(name = "genre_id")})
     private Set<Genre> genres = new HashSet<>();
-    @ManyToMany(cascade = {CascadeType.ALL})
+    @ManyToMany(cascade = {CascadeType.ALL} , fetch = FetchType.LAZY)
     //@Fetch(FetchMode.JOIN)
     @JoinTable(name = "books_authors",
             joinColumns = {@JoinColumn(name = "book_id")},
@@ -57,6 +62,7 @@ public class Book {
     public Book() {
     }
 
+
     public Book(String title, String publisher, int pages, String description, float price, int qty, String photoUrl, Set<Genre> genres, Set<Author> authors) {
         this.title = title;
         this.publisher = publisher;
@@ -65,8 +71,8 @@ public class Book {
         this.price = price;
         this.qty = qty;
         this.photoUrl = photoUrl;
-        //this.genres = genres;
-        //this.authors = authors;
+        this.genres = genres;
+        this.authors = authors;
     }
 
     public int getId() {

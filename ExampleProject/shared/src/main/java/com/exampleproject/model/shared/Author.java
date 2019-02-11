@@ -21,6 +21,9 @@ public class Author {
     private String name;
     @Column(name = "author_surname")
     private String surname;
+//    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+//    @JoinTable(name = "books_authors", joinColumns = @JoinColumn(name = "author_id"), inverseJoinColumns = @JoinColumn(name = "book_id"))
+//    private Book book;
     @ManyToMany(mappedBy = "authors")
     private Set<Book> books;
 

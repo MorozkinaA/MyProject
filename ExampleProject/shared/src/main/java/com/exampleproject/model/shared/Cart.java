@@ -6,13 +6,14 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Component
 @Scope(value = BeanDefinition.SCOPE_PROTOTYPE)
 @Entity
 @Table(name = "carts")
-@JsonIgnoreProperties("books")
+//@JsonIgnoreProperties("books")
 public class Cart {
     @Id
     @Column(name = "cart_id")
@@ -27,7 +28,7 @@ public class Cart {
     @JoinTable(name = "carts_books",
             joinColumns = @JoinColumn(name = "cart_id"),
             inverseJoinColumns = @JoinColumn(name = "book_id"))
-    private Set<Cart> books;
+    private Set<Book> books;
 
 
     public Cart() {
@@ -60,6 +61,24 @@ public class Cart {
 
     public void setPrice(float price) {
         this.price = price;
+    }
+
+    public Set<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(Set<Book> books) {
+        this.books = books;
+    }
+
+    @Override
+    public String toString() {
+        return "Cart{" +
+                "id=" + id +
+                ", customer=" + customer +
+                ", price=" + price +
+                ", books=" + books +
+                '}';
     }
 }
 

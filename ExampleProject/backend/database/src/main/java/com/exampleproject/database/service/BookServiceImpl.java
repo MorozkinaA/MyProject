@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 @Service("bookService")
 @Transactional
@@ -29,11 +30,20 @@ public class BookServiceImpl implements BookService {
         return bookDAO.selectBooks();
     }
 
-    public List<Book> sortBooks(List<String> params) {
+    public List<Book> sortBooks(Map<String, String> params) {
         return  bookDAO.sortBooks(params);
     }
 
-    public Integer selectBookQty(Integer book_id) {
-        return bookDAO.selectBookQty(book_id);
+    public Integer selectBookQty(Integer bookId) {
+        return bookDAO.selectBookQty(bookId);
+    }
+
+    public void addBook(Book book) {
+        bookDAO.addBook(book);
+    }
+
+
+    public void deleteBook(Book book) {
+        bookDAO.deleteBook(book);
     }
 }

@@ -3,8 +3,9 @@
     <g:VerticalPanel>
         <g:HorizontalPanel spacing="10">
             <g:cell width="1100px" horizontalAlignment="ALIGN_RIGHT">
-                <g:Button ui:field="cart" text="Cart" visible="false"/>
+                <g:Button ui:field="cartButton" text="Cart" visible="false"/>
             </g:cell>
+            <g:Button ui:field="changePassword" text="Change users' passwords" visible="false"/>
         </g:HorizontalPanel>
         <g:HorizontalPanel>
             <g:VerticalPanel spacing="10">
@@ -30,7 +31,7 @@
 
                 <g:VerticalPanel spacing="5">
                     <g:Label text="Description: "/>
-                    <g:CheckBox ui:field="withPhoto" text="With proto"/>
+                    <g:CheckBox ui:field="withPhoto" text="With photo"/>
                 </g:VerticalPanel>
 
                 <g:Button ui:field="sort" text="Sort"/>

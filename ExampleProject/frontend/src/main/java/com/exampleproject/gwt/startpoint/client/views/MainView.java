@@ -2,10 +2,12 @@ package com.exampleproject.gwt.startpoint.client.views;
 
 import com.exampleproject.gwt.startpoint.client.WorkerClient;
 import com.exampleproject.model.shared.Book;
+import com.exampleproject.model.shared.Cart;
 import com.exampleproject.model.shared.Genre;
 import com.exampleproject.model.shared.User;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -16,7 +18,9 @@ import org.fusesource.restygwt.client.MethodCallback;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MainView extends Composite {
     interface MainViewUiBinder extends UiBinder<VerticalPanel, MainView> {
@@ -41,58 +45,19 @@ public class MainView extends Composite {
     VerticalPanel booksTable;
 
     @UiField
-    Button cart;
+    Button cartButton;
 
     @UiField
     Button addBookButton;
 
-    @UiHandler("cart")
-    void doClickCart(ClickEvent event){
+    @UiField
+    Button sort;
 
-    }
+    @UiField
+    Button changePassword;
 
-    @UiHandler("sort")
-    void doSorting(ClickEvent event){
-        String minPrice = minPriceBox.getValue();
-        String maxPrice = maxPriceBox.getValue();
-        String genre = genreList.getSelectedItemText();
-        String photo = "ph";
-        if(!withPhoto.isEnabled()){
-            photo = null;
-        }
-        List<String> params = new ArrayList<>();
-        params.add(minPrice);
-        params.add(maxPrice);
-        params.add(genre);
-        params.add(photo);
-        client.sortBooks(params, new MethodCallback<List<Book>>() {
-            @Override
-            public void onFailure(Method method, Throwable throwable) {
-                Window.alert(throwable.toString() + "\n" + throwable.getMessage());
-            }
-
-            @Override
-            public void onSuccess(Method method, List<Book> list) {
-                grid.clear();
-                int i = 1;
-                for(int row = 0; row < grid.getRowCount(); row++){
-                    for(int col = 0; col < grid.getColumnCount(); col++){
-                        grid.setWidget(row, col, new BookPreview(list.get(i)));
-                        i++;
-
-                    }
-                }
-            }
-        });
-    }
-
-    @UiHandler("addBookButton")
-    void openAdditionView(ClickEvent event){
-
-    }
 
     Grid grid = new Grid(4, 5);
-    List<Book> books = new ArrayList<>();
     private final WorkerClient client = GWT.create(WorkerClient.class);
 
     public MainView(User user){
@@ -100,10 +65,11 @@ public class MainView extends Composite {
         initWidget(ourUiBinder.createAndBindUi(this));
 
         if(user.getRole().equals("customer")){
-            cart.setVisible(true);   //cart is available only for customers
+            cartButton.setVisible(true);   //cart is available only for customers
         }
         else if(user.getRole().equals("admin")){
             addBookButton.setVisible(true);   //addition of book is available only for admins
+            changePassword.setVisible(true);  //only admins can change users' passwords
         }
 
         genreList.addItem("all");
@@ -122,6 +88,104 @@ public class MainView extends Composite {
         });
         genreList.setVisibleItemCount(1);
 
+//        client.selectBooks(new MethodCallback<List<Book>>() {
+//            @Override
+//            public void onFailure(Method method, Throwable throwable) {
+//                Window.alert(throwable.toString() + "\n" + throwable.getMessage());
+//            }
+//
+//            @Override
+//            public void onSuccess(Method method, List<Book> list) {
+//                addToGrid(list, user);
+//            }
+//        });
+//        grid.setCellSpacing(3);
+//        booksTable.add(grid);
+        addBooksToGrid(user);
+
+
+        cartButton.addClickHandler(new ClickHandler() {
+            @Override
+            public void onClick(ClickEvent clickEvent) {
+                CartView cartView = new CartView(user);
+                int left = Window.getClientWidth()/ 4;
+                int top = Window.getClientHeight()/ 4;
+                cartView.setPopupPosition(left, top);
+            }
+        });
+
+
+        sort.addClickHandler(new ClickHandler() {
+            @Override
+            public void onClick(ClickEvent clickEvent) {
+                if(sortValidation()){
+                    String minPrice = minPriceBox.getText();
+                    String maxPrice = maxPriceBox.getText();
+                    String genre = genreList.getSelectedItemText();
+                    if(genre.equals("all")){
+                        genre = "";
+                    }
+                    String photo = "ph";
+                    if(!withPhoto.isEnabled()){
+                        photo = null;
+                    }
+                    Map<String, String> params = new HashMap<>();
+                    params.put("minPrice", minPrice);
+                    params.put("maxPrice", maxPrice);
+                    params.put("genre", genre);
+                    params.put("photo", photo);
+                    client.sortBooks(params, new MethodCallback<List<Book>>() {
+                        @Override
+                        public void onFailure(Method method, Throwable throwable) {
+                            Window.alert(throwable.toString() + "\n" + throwable.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(Method method, List<Book> list) {
+                            grid.clear();
+                            addToGrid(list, user);
+                        }
+                    });
+                }
+            }
+        });
+
+        addBookButton.addClickHandler(new ClickHandler() {
+            @Override
+            public void onClick(ClickEvent clickEvent) {
+                AddBookView addBookView = new AddBookView();
+                addBookView.getAddBookButton().addClickHandler(new ClickHandler() {
+                    @Override
+                    public void onClick(ClickEvent clickEvent) {
+                        grid.clear();
+                        addBooksToGrid(user);
+                    }
+                });
+            }
+        });
+
+        changePassword.addClickHandler(new ClickHandler() {
+            @Override
+            public void onClick(ClickEvent clickEvent) {
+                new ChangePasswordView();
+            }
+        });
+
+    }
+
+
+    void addToGrid(List<Book> list, User user){
+        int i = 0;
+        for(int row = 0; row < grid.getRowCount(); row++){
+            for(int col = 0; col < grid.getColumnCount(); col++){
+                BookPreview bookPreview = new BookPreview(list.get(i), user);
+                grid.setWidget(row, col, new BookPreview(list.get(i), user));
+                i++;
+            }
+        }
+    }
+
+    void addBooksToGrid(User user){
         client.selectBooks(new MethodCallback<List<Book>>() {
             @Override
             public void onFailure(Method method, Throwable throwable) {
@@ -130,18 +194,23 @@ public class MainView extends Composite {
 
             @Override
             public void onSuccess(Method method, List<Book> list) {
-                int i = 0;
-                for(int row = 0; row < grid.getRowCount(); row++){
-                    for(int col = 0; col < grid.getColumnCount(); col++) {
-                        grid.setWidget(row, col, new BookPreview(list.get(i)));
-                        i++;
-                    }
-                }
+                addToGrid(list, user);
             }
         });
-
         grid.setCellSpacing(3);
         booksTable.add(grid);
-
     }
+
+    boolean sortValidation(){
+        try{
+            Float.parseFloat(minPriceBox.getText());
+            Float.parseFloat(maxPriceBox.getText());
+        }catch (NumberFormatException ex){
+            Window.alert("Please, enter number in price's fields");
+            return false;
+        }
+        return true;
+    }
+
+
 }

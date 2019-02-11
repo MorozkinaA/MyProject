@@ -2,11 +2,9 @@ package com.exampleproject.web.rest.server;
 
 
 import com.exampleproject.database.service.BookService;
+import com.exampleproject.database.service.PurchaseService;
 import com.exampleproject.database.service.UserService;
-import com.exampleproject.model.shared.Book;
-import com.exampleproject.model.shared.Customer;
-import com.exampleproject.model.shared.Genre;
-import com.exampleproject.model.shared.User;
+import com.exampleproject.model.shared.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +12,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class RestExample {
@@ -21,12 +20,16 @@ public class RestExample {
 
     BookService bookService;
     UserService userService;
+    PurchaseService purchaseService;
 
     @Autowired
-    public RestExample(BookService bookService, UserService userService){
+    public RestExample(BookService bookService, UserService userService, PurchaseService purchaseService) {
         this.bookService = bookService;
         this.userService = userService;
+        this.purchaseService = purchaseService;
     }
+
+
 
     @RequestMapping("/login")
     public User isLogged(@RequestBody List<String> logInfo) {
@@ -49,7 +52,7 @@ public class RestExample {
     }
 
     @RequestMapping("/sort")
-    public List<Book> sortBooks(@RequestBody List<String> params) {
+    public List<Book> sortBooks(@RequestBody Map<String, String> params) {
         return bookService.sortBooks(params);
     }
 
@@ -59,8 +62,37 @@ public class RestExample {
     }
 
     @RequestMapping("/bookQty")
-    public Integer selectBookQty(@RequestBody Integer book_id){
-        return bookService.selectBookQty(book_id);
+    public Integer selectBookQty(@RequestBody Integer bookId){
+        return bookService.selectBookQty(bookId);
     }
 
+    @RequestMapping("/cart")
+    public Cart getCart(@RequestBody User user){
+        return userService.getCart(user);
+    }
+
+    @RequestMapping("/bookToCart")
+    public void addBookToCart(@RequestBody Map<String, Integer> params){
+        purchaseService.addBookToCart(params);
+    }
+
+    @RequestMapping("/addBook")
+    public void addBook(@RequestBody Book book){
+        bookService.addBook(book);
+    }
+
+    @RequestMapping("/bookFromCart")
+    public void deleteBookFromCart(@RequestBody Map<String, Integer> params){
+        purchaseService.deleteBookFromCart(params);
+    }
+
+    @RequestMapping("/changePassword")
+    public void changePassword(@RequestBody Map<String, String> params){
+        userService.changePassword(params);
+    }
+
+    @RequestMapping("/deleteBook")
+    public void deleteBook(@RequestBody Book book){
+        bookService.deleteBook(book);
+    }
 }

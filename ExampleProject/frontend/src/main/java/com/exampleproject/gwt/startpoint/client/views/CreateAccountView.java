@@ -75,59 +75,61 @@ public class CreateAccountView extends Composite {
 
     boolean validation(){
         if(nameBox.getText().length() == 0){
-            errorLabel.setText("Пожалуйста, введите имя");
+            errorLabel.setText("Please, enter name");
             valid = false;
+            return false;
         }
         else if (surnameBox.getText().length() ==0) {
-            errorLabel.setText("Пожалуйста, введите фамилию");
+            errorLabel.setText("Please, enter surname");
             valid = false;
         }
         else if(emailBox.getText().length() == 0){
-            errorLabel.setText("Пожалуйста, заполните поле e-mail");
+            errorLabel.setText("Plese, enter e-mail");
             valid = false;
         }
         else if(loginBox.getText().length() == 0){
-            errorLabel.setText("Пожалуйста, заполните поле логина");
+            errorLabel.setText("Please, enter login");
             valid = false;
         }
         else if(loginBox.getText().length() < 10){
-            errorLabel.setText("Логин должен содержать больше 10 символов");
+            errorLabel.setText("Login should consist of more then 10 symbols");
             valid = false;
         }
         else if(passwordBox.getText().length() == 0){
-            errorLabel.setText("Пожалуйста, заполните поле пароля");
+            errorLabel.setText("Please, enter password");
             valid = false;
         }
         else if(passwordBox.getText().length() < 7){
-            errorLabel.setText("Пароль должен содержать больше 6 символов");
+            errorLabel.setText("Password should consist of more then 6 symbols");
             passwordBox.setText("");
             valid = false;
         }
         else if(confirmPasswordBox.getText().length() == 0){
-            errorLabel.setText("Пожалуйста, подтвердите пароль");
+            errorLabel.setText("Please, repeat password");
             valid = false;
         }
         else if(!confirmPasswordBox.getText().equals(passwordBox.getText())){
-            errorLabel.setText("Пароли не совпадают");
+            errorLabel.setText("Passwords are not equal");
             passwordBox.setText("");
             confirmPasswordBox.setText("");
             valid = false;
         }
-        boolean canSign = true;
-        client.loginIsFree(loginBox.getText(), new MethodCallback<Boolean>() {
-            @Override
-            public void onFailure(Method method, Throwable throwable) {
-                Window.alert(throwable.toString() + "\n" + throwable.getMessage());
-            }
-
-            @Override
-            public void onSuccess(Method method, Boolean aBoolean) {
-                valid = aBoolean;
-                if(aBoolean == false){
-                    errorLabel.setText("Этот логин уже занят. Придумайте другой");
+        else{
+            client.loginIsFree(loginBox.getText(), new MethodCallback<Boolean>() {
+                @Override
+                public void onFailure(Method method, Throwable throwable) {
+                    Window.alert(throwable.toString() + "\n" + throwable.getMessage());
                 }
-            }
-        });
+
+                @Override
+                public void onSuccess(Method method, Boolean aBoolean) {
+                    valid = aBoolean;
+                    if(aBoolean == false){
+                        errorLabel.setText("This login is already used. Enter another one.");
+                    }
+                }
+            });
+        }
         return valid;
     }
 }

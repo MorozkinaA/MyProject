@@ -1,6 +1,9 @@
 package com.exampleproject.gwt.startpoint.client.views;
 
+import com.exampleproject.gwt.startpoint.client.WorkerClient;
 import com.exampleproject.model.shared.Book;
+import com.exampleproject.model.shared.Cart;
+import com.exampleproject.model.shared.User;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -9,6 +12,13 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.*;
+import org.fusesource.restygwt.client.Method;
+import org.fusesource.restygwt.client.MethodCallback;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 public class BookPreview extends Composite {
@@ -26,12 +36,16 @@ public class BookPreview extends Composite {
     @UiField
     Label price;
     @UiField
+    Label canBuy;
+    @UiField
     Button buyBook;
     @UiField
     Button moreInfo;
 
+    private final WorkerClient client = GWT.create(WorkerClient.class);
 
-    public BookPreview(Book book) {
+
+    public BookPreview(Book book, User user) {
         super();
         initWidget(ourUiBinder.createAndBindUi(this));
         if(book.getPhotoUrl() == null){
@@ -48,11 +62,63 @@ public class BookPreview extends Composite {
         moreInfo.addClickHandler(new ClickHandler() {
             @Override
             public void onClick(ClickEvent clickEvent) {
-                BookInfoView bookInfoView = new BookInfoView(book);
+                BookInfoView bookInfoView = new BookInfoView(book, user);
                 int left = Window.getClientWidth()/ 4;
                 int top = Window.getClientHeight()/ 4;
                 bookInfoView.setPopupPosition(left, top);
             }
         });
+
+        if(user.getRole().equals("customer")){
+            client.selectBookQty(book.getId(), new MethodCallback<Integer>() {
+                @Override
+                public void onFailure(Method method, Throwable throwable) {
+                    Window.alert(throwable.toString() + "\n" + throwable.getMessage());
+                }
+
+                @Override
+                public void onSuccess(Method method, Integer qty) {
+                    if(qty > 0){
+                        buyBook.setVisible(true);
+                    }
+                    else{
+                        canBuy.setText("Not available");
+                    }
+                }
+            });
+        }
+
+        buyBook.addClickHandler(new ClickHandler() {
+            @Override
+            public void onClick(ClickEvent clickEvent) {
+                client.getCart(user, new MethodCallback<Cart>() {
+                    @Override
+                    public void onFailure(Method method, Throwable throwable) {
+                        Window.alert(throwable.toString() + "\n" + throwable.getMessage());
+                    }
+
+                    @Override
+                    public void onSuccess(Method method, Cart cart) {
+                        Map<String, Integer> params = new HashMap<>();
+                        params.put("cartId", cart.getId());
+                        params.put("bookId", book.getId());
+                        client.addBookToCart(params, new MethodCallback<Void>() {
+                            @Override
+                            public void onFailure(Method method, Throwable throwable) {
+                                Window.alert(throwable.toString() + "\n" + throwable.getMessage());
+                            }
+
+                            @Override
+                            public void onSuccess(Method method, Void aVoid) {
+                                Window.alert("Book was added to your cart");
+                            }
+                        });
+                    }
+                });
+            }
+        });
     }
+
+    Button deleteBox;
+
 }

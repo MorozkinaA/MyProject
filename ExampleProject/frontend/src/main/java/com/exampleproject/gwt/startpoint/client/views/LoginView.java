@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LoginView extends Composite{
-    interface LoginViewUiBinder extends UiBinder<VerticalPanel, LoginView> {
+    interface LoginViewUiBinder extends UiBinder<HorizontalPanel, LoginView> {
     }
 
     private static LoginViewUiBinder ourUiBinder = GWT.create(LoginViewUiBinder.class);

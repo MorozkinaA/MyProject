@@ -2,8 +2,11 @@ package com.exampleproject.gwt.startpoint.client.views;
 
 import com.exampleproject.gwt.startpoint.client.WorkerClient;
 import com.exampleproject.model.shared.Book;
+import com.exampleproject.model.shared.Cart;
+import com.exampleproject.model.shared.User;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -11,6 +14,11 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.*;
 import org.fusesource.restygwt.client.Method;
 import org.fusesource.restygwt.client.MethodCallback;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class BookInfoView extends DialogBox {
     interface BookInfoViewUiBinder extends UiBinder<HorizontalPanel, BookInfoView> {
@@ -45,6 +53,12 @@ public class BookInfoView extends DialogBox {
     @UiField
     Button toCart;
 
+    @UiField
+    Button deleteBook;
+
+    @UiField
+    Button editBook;
+
     @UiHandler("close")
     void onDismiss(ClickEvent event){
         hide();
@@ -57,8 +71,8 @@ public class BookInfoView extends DialogBox {
 
     private final WorkerClient client = GWT.create(WorkerClient.class);
 
-    public BookInfoView(Book book) {
-        super(true, true);
+    public BookInfoView(Book book, User user) {
+        super(false, true);
         setWidget(ourUiBinder.createAndBindUi(this));
         setText(book.getTitle());
         setAnimationEnabled(true);
@@ -72,28 +86,84 @@ public class BookInfoView extends DialogBox {
         pages.setText(Integer.toString(book.getPages()));
         description.setText(book.getDescription());
 
-        client.selectBookQty(book.getId(), new MethodCallback<Integer>() {
-            @Override
-            public void onFailure(Method method, Throwable throwable) {
-                Window.alert(throwable.toString() + "\n" + throwable.getMessage());
-            }
+        if(user.getRole().equals("customer")){
+            client.selectBookQty(book.getId(), new MethodCallback<Integer>() {
+                @Override
+                public void onFailure(Method method, Throwable throwable) {
+                    Window.alert(throwable.toString() + "\n" + throwable.getMessage());
+                }
 
+                @Override
+                public void onSuccess(Method method, Integer qty) {
+                    if(qty > 0){
+                        toCart.setVisible(true);
+                    }
+                    else{
+                        canBuy.setText("Not available");
+                    }
+                }
+            });
+            toCart.addClickHandler(new ClickHandler() {
+                @Override
+                public void onClick(ClickEvent clickEvent) {
+                    client.getCart(user, new MethodCallback<Cart>() {
+                        @Override
+                        public void onFailure(Method method, Throwable throwable) {
+                            Window.alert(throwable.toString() + "\n" + throwable.getMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(Method method, Cart cart) {
+                            Map<String, Integer> params = new HashMap<>();
+                            params.put("cartId", cart.getId());
+                            params.put("bookId", book.getId());
+                            client.addBookToCart(params, new MethodCallback<Void>() {
+                                @Override
+                                public void onFailure(Method method, Throwable throwable) {
+                                    Window.alert(throwable.toString() + "\n" + throwable.getMessage());
+                                }
+
+                                @Override
+                                public void onSuccess(Method method, Void aVoid) {
+                                    Window.alert("Book was added to your cart");
+                                }
+                            });
+
+                        }
+                    });
+                }
+            });
+        }
+        else if(user.getRole().equals("admin")){
+            deleteBook.setVisible(true);
+            editBook.setVisible(true);
+        }
+
+        deleteBook.addClickHandler(new ClickHandler() {
             @Override
-            public void onSuccess(Method method, Integer qty) {
-                if(qty > 0){
-                    //canBuy.setText("Available");
-                    toCart.setVisible(true);
-                }
-                else{
-                    canBuy.setText("Not available");
-                }
+            public void onClick(ClickEvent clickEvent) {
+                client.deleteBook(book, new MethodCallback<Void>() {
+                    @Override
+                    public void onFailure(Method method, Throwable throwable) {
+                        Window.alert(throwable.toString() + "\n" + throwable.getMessage());
+                    }
+
+                    @Override
+                    public void onSuccess(Method method, Void aVoid) {
+                        Window.alert("Book was successfully deleted");
+                    }
+                });
+            }
+        });
+
+        editBook.addClickHandler(new ClickHandler() {
+            @Override
+            public void onClick(ClickEvent clickEvent) {
+
             }
         });
 
         setSize("600", "450");
         center();
     }
-
-
-
 }

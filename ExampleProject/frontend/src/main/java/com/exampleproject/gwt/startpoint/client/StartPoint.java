@@ -1,9 +1,7 @@
 package com.exampleproject.gwt.startpoint.client;
 
 
-import com.exampleproject.gwt.startpoint.client.views.CreateAccountView;
-import com.exampleproject.gwt.startpoint.client.views.LoginView;
-import com.exampleproject.gwt.startpoint.client.views.MainView;
+import com.exampleproject.gwt.startpoint.client.views.*;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.RootPanel;

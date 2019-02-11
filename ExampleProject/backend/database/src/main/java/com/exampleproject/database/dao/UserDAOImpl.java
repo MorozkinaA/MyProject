@@ -1,13 +1,11 @@
 package com.exampleproject.database.dao;
 
 
+import com.exampleproject.model.shared.Book;
 import com.exampleproject.model.shared.Cart;
 import com.exampleproject.model.shared.Customer;
 import com.exampleproject.model.shared.User;
-import org.hibernate.Criteria;
-import org.hibernate.NonUniqueResultException;
-import org.hibernate.SQLQuery;
-import org.hibernate.SessionFactory;
+import org.hibernate.*;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.object.SqlQuery;
@@ -16,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 
 @Repository("userDAO")
@@ -33,6 +32,7 @@ public class UserDAOImpl extends BasicDAO implements UserDAO {
         persist(user);
         persist(customer);
         Cart cart = new Cart(customer, 0);
+        persist(cart);
     }
 
     public boolean loginIsFree(String login) {
@@ -50,9 +50,6 @@ public class UserDAOImpl extends BasicDAO implements UserDAO {
         String login = logInfo.get(0);
         String password = logInfo.get(1);
         User user;
-//        SQLQuery query = getSession().createSQLQuery("SELECT * FROM users" +
-//                " WHERE user_login = " + login + " AND user_password = " + password);
-//        return (User)query.uniqueResult();
         Criteria criteria = getSession().createCriteria(User.class);
         criteria.add(Restrictions.eq("login", login));
         criteria.add(Restrictions.eq("password", password));
@@ -63,9 +60,29 @@ public class UserDAOImpl extends BasicDAO implements UserDAO {
         }
         return user;
     }
-//
-//    public Cart getCart(User user) {
-//        Criteria criteria = getSession().createCriteria(Cart.class);
-//
-//    }
+
+    public Cart getCart(User user) {
+        Criteria criteria = getSession().createCriteria(Customer.class);
+        criteria.add(Restrictions.eq("user", user));
+        Customer customer = (Customer)criteria.uniqueResult();
+        Criteria criteria1 = getSession().createCriteria(Cart.class);
+        criteria1.add(Restrictions.eq("customer", customer));
+        Cart cart = (Cart)criteria1.uniqueResult();
+        Hibernate.initialize(cart.getBooks());
+        for(Book b : cart.getBooks()){
+            Hibernate.initialize(b.getAuthors());
+            Hibernate.initialize(b.getGenres());
+        }
+        return cart;
+    }
+
+    public void changePassword(Map<String, String> params) {
+        String login = params.get("login");
+        String password = params.get("password");
+        Criteria criteria = getSession().createCriteria(User.class);
+        criteria.add(Restrictions.eq("login", login));
+        User user = (User)criteria.uniqueResult();
+        user.setPassword(password);
+        update(user);
+    }
 }

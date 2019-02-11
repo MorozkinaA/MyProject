@@ -1,13 +1,11 @@
 package com.exampleproject.gwt.startpoint.client;
 
-import com.exampleproject.model.shared.Book;
-import com.exampleproject.model.shared.Customer;
-import com.exampleproject.model.shared.Genre;
-import com.exampleproject.model.shared.User;
+import com.exampleproject.model.shared.*;
 import org.fusesource.restygwt.client.MethodCallback;
 import org.fusesource.restygwt.client.RestService;
 import javax.ws.rs.*;
 import java.util.List;
+import java.util.Map;
 
 
 public interface WorkerClient extends RestService {
@@ -31,7 +29,7 @@ public interface WorkerClient extends RestService {
 
 	@POST
 	@Path("/sort")
-	void sortBooks(List<String> params, MethodCallback<List<Book>> callback);
+	void sortBooks(Map<String, String> params, MethodCallback<List<Book>> callback);
 
 	@POST
 	@Path("/canSign")
@@ -40,4 +38,28 @@ public interface WorkerClient extends RestService {
 	@POST
 	@Path("/bookQty")
 	void selectBookQty(Integer book_id, MethodCallback<Integer> callback);
+
+	@POST
+	@Path("/cart")
+	void getCart(User user, MethodCallback<Cart> callback);
+
+	@POST
+	@Path("/bookToCart")
+	void addBookToCart(Map<String, Integer> params, MethodCallback<Void> callback);
+
+	@PUT
+	@Path("/addBook")
+	void addBook(Book book, MethodCallback<Void> callback);
+
+	@PUT
+	@Path("/bookFromCart")
+	void deleteBookFromCart(Map<String, Integer> params, MethodCallback<Void> callback);
+
+	@PUT
+	@Path("/changePassword")
+	void changePassword(Map<String, String> params, MethodCallback<Void> callback);
+
+	@DELETE
+	@Path("/deleteBook")
+	void deleteBook(Book book, MethodCallback<Void> callback);
 }

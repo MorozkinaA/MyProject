@@ -2,11 +2,11 @@
              xmlns:g='urn:import:com.google.gwt.user.client.ui'>
     <g:VerticalPanel spacing="5">
         <g:HorizontalPanel spacing="5">
-            <g:Label text="Имя: "/>
+            <g:Label text="Name: "/>
             <g:TextBox ui:field="nameBox"/>
         </g:HorizontalPanel>
         <g:HorizontalPanel spacing="5">
-            <g:Label text="Фамилия: "/>
+            <g:Label text="Surname: "/>
             <g:TextBox ui:field="surnameBox"/>
         </g:HorizontalPanel>
         <g:HorizontalPanel spacing="5">
@@ -14,18 +14,18 @@
             <g:TextBox ui:field="emailBox"/>
         </g:HorizontalPanel>
         <g:HorizontalPanel spacing="5">
-            <g:Label text="Логин: "/>
+            <g:Label text="Login: "/>
             <g:TextBox ui:field="loginBox"/>
         </g:HorizontalPanel>
         <g:HorizontalPanel spacing="5">
-            <g:Label text="Пароль: "/>
+            <g:Label text="Password: "/>
             <g:TextBox ui:field="passwordBox"/>
         </g:HorizontalPanel>
         <g:HorizontalPanel spacing="5">
-            <g:Label text="Повторите пароль: "/>
+            <g:Label text="Repeat password: "/>
             <g:TextBox ui:field="confirmPasswordBox"/>
         </g:HorizontalPanel>
-        <g:Button ui:field="signUpButton" text="Зарегестрироваться"/>
+        <g:Button ui:field="signUpButton" text="Create account"/>
         <g:Label ui:field="errorLabel"/>
     </g:VerticalPanel>
 </ui:UiBinder>

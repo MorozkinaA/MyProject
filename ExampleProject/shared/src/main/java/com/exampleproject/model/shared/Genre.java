@@ -1,6 +1,7 @@
 package com.exampleproject.model.shared;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
@@ -15,7 +16,7 @@ import java.util.Set;
 @Entity
 //@Transactional
 @Table(name = "genres")
-@JsonIgnoreProperties({"books"})
+@JsonIgnoreProperties("books")
 public class Genre {
     @Id
     @Column(name = "genre_id")
@@ -23,6 +24,10 @@ public class Genre {
     private int id;
     @Column(name = "genre_name")
     private String genre;
+//    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+//    @JoinTable(name = "books_genres", joinColumns = @JoinColumn(name ="genre_id"), inverseJoinColumns = @JoinColumn(name ="book_id"))
+//    @JsonIgnore
+//    Book book;
     @ManyToMany(mappedBy = "genres")
     private Set<Book> books;
 
@@ -49,13 +54,13 @@ public class Genre {
         this.genre = genre;
     }
 
-//    public Book getBook() {
-//        return book;
-//    }
-//
-//    public void setBook(Book book) {
-//        this.book = book;
-//    }
+    public Set<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(Set<Book> books) {
+        this.books = books;
+    }
 
     @Override
     public String toString() {
