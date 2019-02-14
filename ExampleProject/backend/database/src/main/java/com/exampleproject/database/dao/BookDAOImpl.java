@@ -19,6 +19,7 @@ import java.sql.PreparedStatement;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 @Repository("bookDAO")
 @Component
@@ -136,5 +137,9 @@ public class BookDAOImpl extends BasicDAO implements BookDAO{
 
     public void deleteBook(Book book) {
         delete(book);
+    }
+
+    public void updateBook(Book book) {
+        update(book);
     }
 }

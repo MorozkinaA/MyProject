@@ -13,6 +13,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @RestController
 public class RestExample {
@@ -86,6 +87,11 @@ public class RestExample {
         purchaseService.deleteBookFromCart(params);
     }
 
+    @RequestMapping("/customer")
+    public Customer getCustomer(@RequestBody User user){
+        return userService.getCustomer(user);
+    }
+
     @RequestMapping("/changePassword")
     public void changePassword(@RequestBody Map<String, String> params){
         userService.changePassword(params);
@@ -94,5 +100,25 @@ public class RestExample {
     @RequestMapping("/deleteBook")
     public void deleteBook(@RequestBody Book book){
         bookService.deleteBook(book);
+    }
+
+    @RequestMapping("/updateBook")
+    public void updateBook(@RequestBody Book book){
+        bookService.updateBook(book);
+    }
+
+//    @RequestMapping("/addresses")
+//    public Set<Adress> selectAddresses(@RequestBody User user) {
+//        return purchaseService.selectAddresses(user);
+//    }
+
+    @RequestMapping("/addAddress")
+    public void addAddress(@RequestBody Customer customer){
+        purchaseService.addAddress(customer);
+    }
+
+    @RequestMapping("/order")
+    public void createOrder(@RequestBody Order order){
+        purchaseService.createOrder(order);
     }
 }

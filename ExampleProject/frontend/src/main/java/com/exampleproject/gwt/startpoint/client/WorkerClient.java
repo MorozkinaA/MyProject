@@ -6,6 +6,7 @@ import org.fusesource.restygwt.client.RestService;
 import javax.ws.rs.*;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 
 public interface WorkerClient extends RestService {
@@ -51,7 +52,7 @@ public interface WorkerClient extends RestService {
 	@Path("/addBook")
 	void addBook(Book book, MethodCallback<Void> callback);
 
-	@PUT
+	@POST
 	@Path("/bookFromCart")
 	void deleteBookFromCart(Map<String, Integer> params, MethodCallback<Void> callback);
 
@@ -62,4 +63,24 @@ public interface WorkerClient extends RestService {
 	@DELETE
 	@Path("/deleteBook")
 	void deleteBook(Book book, MethodCallback<Void> callback);
+
+//	@POST
+//	@Path("/addresses")
+//	void selectAddresses(User user, MethodCallback<Set<Adress>> callback);
+
+	@PUT
+	@Path("/addAddress")
+	void addAddress(Customer customer, MethodCallback<Void> callback);
+
+	@POST
+	@Path("/customer")
+	void getCustomer(User user, MethodCallback<Customer> callback);
+
+	@POST
+	@Path("/updateBook")
+	void updateBook(Book book, MethodCallback<Void> callback);
+
+	@PUT
+	@Path("/order")
+	void createOrder(Order order, MethodCallback<Void> callback);
 }

@@ -1,8 +1,7 @@
 package com.exampleproject.database.dao;
 
 
-import com.exampleproject.model.shared.Book;
-import com.exampleproject.model.shared.Cart;
+import com.exampleproject.model.shared.*;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -35,6 +34,11 @@ public class PurchaseDAOImpl extends BasicDAO implements PurchaseDAO{
         criteria1.add(Restrictions.eq("id", bookId));
         Book book = (Book)criteria1.uniqueResult();
         Set<Book> books = cart.getBooks();
+        for(Book b : books){
+            if(book.equals(b)){
+
+            }
+        }
         books.add(book);
         cart.setBooks(books);
         Float price = cart.getPrice();
@@ -63,5 +67,24 @@ public class PurchaseDAOImpl extends BasicDAO implements PurchaseDAO{
         book.setQty(newQty);
         update(book);
         update(cart);
+    }
+
+    public Set<Adress> selectAddresses(User user) {
+        Criteria criteria = getSession().createCriteria(Customer.class);
+        criteria.add(Restrictions.eq("user", user));
+        Customer customer = (Customer)criteria.uniqueResult();
+        return customer.getAdresses();
+    }
+
+    public void addAddress(Customer customer) {
+        Set<Adress> adresses = customer.getAdresses();
+        for(Adress a : adresses){
+            persist(a);
+        }
+        update(customer);
+    }
+
+    public void createOrder(Order order) {
+        persist(order);
     }
 }

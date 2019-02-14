@@ -15,4 +15,5 @@ public interface BookService {
     Integer selectBookQty(Integer bookId);
     void addBook(Book book);
     void deleteBook(Book book);
+    void updateBook(Book book);
 }

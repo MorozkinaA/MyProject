@@ -1,5 +1,6 @@
 package com.exampleproject.model.shared;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -10,6 +11,7 @@ import javax.persistence.*;
 @Scope(value = BeanDefinition.SCOPE_PROTOTYPE)
 @Entity
 @Table(name = "users")
+@JsonIgnoreProperties("customer")
 public class User {
     @Id
     @Column(name = "user_id")
@@ -25,8 +27,8 @@ public class User {
     private String login;
     @Column(name = "user_password")
     private String password;
-
-//    @OneToOne(mappedBy = "user")
+//
+//    @OneToOne(optional = false, mappedBy = "user")
 //    private Customer customer;
 
     public User() {
@@ -87,6 +89,14 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
+//    public Customer getCustomer() {
+//        return customer;
+//    }
+//
+//    public void setCustomer(Customer customer) {
+//        this.customer = customer;
+//    }
 
     @Override
     public String toString() {

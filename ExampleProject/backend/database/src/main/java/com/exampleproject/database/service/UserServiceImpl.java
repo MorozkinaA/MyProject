@@ -41,4 +41,8 @@ public class UserServiceImpl implements UserService {
     public void changePassword(Map<String, String> params) {
         userDAO.changePassword(params);
     }
+
+    public Customer getCustomer(User user) {
+        return userDAO.getCustomer(user);
+    }
 }

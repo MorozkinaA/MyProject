@@ -85,4 +85,11 @@ public class UserDAOImpl extends BasicDAO implements UserDAO {
         user.setPassword(password);
         update(user);
     }
+
+    public Customer getCustomer(User user) {
+        Criteria criteria = getSession().createCriteria(Customer.class);
+        criteria.add(Restrictions.eq("user", user));
+        Customer customer = (Customer)criteria.uniqueResult();
+        return customer;
+    }
 }

@@ -46,4 +46,8 @@ public class BookServiceImpl implements BookService {
     public void deleteBook(Book book) {
         bookDAO.deleteBook(book);
     }
+
+    public void updateBook(Book book) {
+        bookDAO.updateBook(book);
+    }
 }

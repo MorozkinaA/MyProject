@@ -1,6 +1,7 @@
 package com.exampleproject.gwt.startpoint.client.views;
 
 import com.exampleproject.gwt.startpoint.client.WorkerClient;
+import com.exampleproject.gwt.startpoint.client.views.customers.CreateAccountView;
 import com.exampleproject.model.shared.User;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -12,7 +13,6 @@ import com.google.gwt.user.client.ui.*;
 import org.fusesource.restygwt.client.Method;
 import org.fusesource.restygwt.client.MethodCallback;
 
-import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,16 +36,16 @@ public class LoginView extends Composite{
     @UiHandler("loginButton")
     void doClickLogin(ClickEvent event){
         if(loginBox.getText().length() == 0){
-            errorLabel.setText("Пожалуйста, введите логин");
+            errorLabel.setText("Please, enter login");
         }
         else if(passwordBox.getText().length() == 0){
-            errorLabel.setText("Пожалуйста, введите пароль");
+            errorLabel.setText("Please, enter password");
         }
         else if(loginBox.getText().length() < 5){
-            errorLabel.setText("Логин слишком короткий");
+            errorLabel.setText("Login is too short");
         }
         else if(passwordBox.getText().length() < 5){
-            errorLabel.setText("Пароль слишком короткий");
+            errorLabel.setText("Password is too short");
         }
         else {
             errorLabel.setText("");
@@ -61,7 +61,7 @@ public class LoginView extends Composite{
                 @Override
                 public void onSuccess(Method method, User user) {
                     if(user == null){
-                        errorLabel.setText("Пожалуйста, введите корректные логин и пароль");
+                        errorLabel.setText("Please, enter correct login and password");
                     }
                     else{
                         RootPanel.get().clear();

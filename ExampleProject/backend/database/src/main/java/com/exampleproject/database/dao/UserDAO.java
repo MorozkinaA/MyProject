@@ -13,4 +13,5 @@ public interface UserDAO {
     User isLogged(List<String> logInfo);  //checks if login and password are correct
     Cart getCart(User user);
     void changePassword(Map<String, String> params);
+    Customer getCustomer(User user);
 }

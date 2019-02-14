@@ -16,4 +16,5 @@ public interface UserService {
     User isLogged(List<String> loginInfo);
     Cart getCart(User user);
     void changePassword(Map<String, String> params);
+    Customer getCustomer(User user);
 }
