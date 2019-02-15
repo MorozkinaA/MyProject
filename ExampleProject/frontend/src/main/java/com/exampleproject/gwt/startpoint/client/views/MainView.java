@@ -109,6 +109,7 @@ public class MainView extends Composite {
                         addBooksToGrid(user);
                     }
                 });
+                addBookView.getAddBookButton().add
             }
         });
     }

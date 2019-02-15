@@ -69,7 +69,7 @@ public class Author {
 
     @Override
     public String toString() {
-        return surname + " " + name;
+        return name + " " + surname;
     }
 }
 

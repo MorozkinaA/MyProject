@@ -7,6 +7,7 @@ import com.exampleproject.model.shared.Genre;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.regexp.shared.RegExp;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -102,7 +103,6 @@ public class AddBookView extends DialogBox {
                         }
                     });
                 }
-
             }
         });
         setSize("500", "500");
@@ -111,6 +111,8 @@ public class AddBookView extends DialogBox {
 
 
     boolean validation(){
+        RegExp regExpPrice = RegExp.compile("([0-9]*[.])?[0-9]");
+        RegExp regExpQtyPages = RegExp.compile("[0-9]");
         if(titleBox.getText().length() == 0){
             errorLabel.setText("Please, enter title");
             return false;
@@ -127,30 +129,32 @@ public class AddBookView extends DialogBox {
             errorLabel.setText("Please, enter genre");
             return false;
         }
+        else if(pagesBox.getText().length() == 0){
+            errorLabel.setText("Please, enter pages quantity");
+            return false;
+        }
+        else if(!regExpQtyPages.test(pagesBox.getText())){
+            errorLabel.setText("Pages should be an integer number");
+            return false;
+        }
         else if(publisherBox.getText().length() == 0){
             errorLabel.setText("Please, enter publisher");
+            return false;
+        }
+        else if(qtyBox.getText().length() == 0){
+            errorLabel.setText("Please, enter quantity of books");
+            return false;
+        }
+        else if(!regExpQtyPages.test(qtyBox.getText())){
+            errorLabel.setText("Quantity should be an integer number");
             return false;
         }
         else if(priceBox.getText().length() == 0){
             errorLabel.setText("Please, enter book's price");
             return false;
         }
-        try{
-            Integer.parseInt(pagesBox.getText());
-        }catch (NumberFormatException ex){
-            errorLabel.setText("Please, enter integer value in price's field");
-            return false;
-        }
-        try{
-            Integer.parseInt(qtyBox.getText());
-        }catch (NumberFormatException ex){
-            errorLabel.setText("Please, enter integer value in qty field");
-            return false;
-        }
-        try{
-            Float.parseFloat(priceBox.getText());
-        }catch (NumberFormatException ex){
-            errorLabel.setText("Please, enter number in price field");
+        else if(!regExpPrice.test(priceBox.getText())){
+            errorLabel.setText("Price should be a float number");
             return false;
         }
         return true;

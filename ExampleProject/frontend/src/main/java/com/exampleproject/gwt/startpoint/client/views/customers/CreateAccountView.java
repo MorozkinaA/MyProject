@@ -6,6 +6,8 @@ import com.exampleproject.model.shared.Customer;
 import com.exampleproject.model.shared.User;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.regexp.shared.MatchResult;
+import com.google.gwt.regexp.shared.RegExp;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -74,9 +76,10 @@ public class CreateAccountView extends Composite {
 
 
     boolean validation(){
-//        String validLogin = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" +
-//                "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-//        Pattern pattern = Pattern.compile(validLogin, Pattern.CASE_INSENSITIVE);
+        String validEmail = "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$";
+        RegExp regExpEmail = RegExp.compile(validEmail);
+        String validLogin = "^a-zA-Z0-9_.$";
+        RegExp regExpLogin = RegExp.compile(validLogin);
         if(nameBox.getText().length() == 0){
             errorLabel.setText("Please, enter name");
             valid = false;
@@ -87,7 +90,7 @@ public class CreateAccountView extends Composite {
             valid = false;
         }
         else if(emailBox.getText().length() == 0){
-            errorLabel.setText("Plese, enter e-mail");
+            errorLabel.setText("Please, enter e-mail");
             valid = false;
         }
         else if(loginBox.getText().length() == 0){
@@ -115,6 +118,15 @@ public class CreateAccountView extends Composite {
             errorLabel.setText("Passwords are not equal");
             passwordBox.setText("");
             confirmPasswordBox.setText("");
+            valid = false;
+        }
+        else if(!regExpEmail.test(emailBox.getText())){
+            errorLabel.setText("Please, enter correct e-mail");
+            valid = false;
+        }
+        else if(!regExpLogin.test(loginBox.getText())){
+            errorLabel.setText("Login should contain only numbers, " + "\n" +
+                    "upper- and lower-case latin letters and symbols: . _");
             valid = false;
         }
         else{
