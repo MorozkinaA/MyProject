@@ -10,6 +10,8 @@ import com.exampleproject.model.shared.User;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.TouchCancelEvent;
+import com.google.gwt.event.dom.client.TouchCancelHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.Window;
@@ -109,7 +111,6 @@ public class MainView extends Composite {
                         addBooksToGrid(user);
                     }
                 });
-                addBookView.getAddBookButton().add
             }
         });
     }
@@ -127,7 +128,7 @@ public class MainView extends Composite {
                     }
                     String photo = "ph";
                     if(!withPhoto.isEnabled()){
-                        photo = null;
+                        photo = "";
                     }
                     Map<String, String> params = new HashMap<>();
                     params.put("minPrice", minPrice);
@@ -182,7 +183,7 @@ public class MainView extends Composite {
         genreList.setVisibleItemCount(1);
     }
 
-    void addToGrid(List<Book> list, User user){
+     void addToGrid(List<Book> list, User user){
         int i = 0;
         for(int row = 0; row < booksGrid.getRowCount(); row++){
             for(int col = 0; col < booksGrid.getColumnCount(); col++){

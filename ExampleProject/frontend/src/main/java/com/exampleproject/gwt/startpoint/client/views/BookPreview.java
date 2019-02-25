@@ -55,19 +55,14 @@ public class BookPreview extends Composite {
     @Override
     protected void initWidget(Widget widget) {
         super.initWidget(widget);
-        if(book.getPhotoUrl() == null){
-            photo.setUrl("https://smvape.com.ua/wp-content/uploads/2018/12/no_photo.jpg");
-        }
-        else{
-            photo.setUrl(book.getPhotoUrl());
-        }
+        photo.setUrl(book.getPhotoUrl());
         photo.setPixelSize(150, 250);
         title.setText(book.getTitle());
-        author.setText(book.getAuthors().toString());
+        author.setText(book.authorsToString());
         price.setText(Float.toString(book.getPrice()) + " euro");
 
         if(user.getRole().equals("customer")) {
-            opportunityToAddBookToCart(user, book);
+            opportunityToAddBookToCart(book);
             addBookToCart(user, book);
         }
         moreInfo.addClickHandler(new ClickHandler() {
@@ -81,23 +76,13 @@ public class BookPreview extends Composite {
         });
     }
 
-    void opportunityToAddBookToCart(User user, Book book){
-        client.selectBookQty(book.getId(), new MethodCallback<Integer>() {
-            @Override
-            public void onFailure(Method method, Throwable throwable) {
-                Window.alert(throwable.toString() + "\n" + throwable.getMessage());
-            }
-
-            @Override
-            public void onSuccess(Method method, Integer qty) {
-                if(qty > 0){
-                    buyBook.setVisible(true);
-                }
-                else{
-                    canBuy.setText("Not available");
-                }
-            }
-        });
+    void opportunityToAddBookToCart(Book book){
+        if(book.getQty() > 0){
+            buyBook.setVisible(true);
+        }
+        else{
+            canBuy.setText("Not available");
+        }
     }
 
     void addBookToCart(User user, Book book){

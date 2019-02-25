@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.util.Date;
 
 
 @Component
@@ -18,12 +18,15 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @OneToOne
-    @JoinColumn(name = "cart", referencedColumnName = "cart_id")
+    @JoinColumn(name = "cart_id", referencedColumnName = "cart_id")
     private Cart cart;
     @Column(name = "order_date")
     private Date date;
     @Column(name = "order_status")
     private String status;
+    @OneToOne
+    @JoinColumn(name = "adress_id", referencedColumnName = "adress_id")
+    private Adress adress;
 
     public Order() {
     }
@@ -64,6 +67,14 @@ public class Order {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public Adress getAdress() {
+        return adress;
+    }
+
+    public void setAdress(Adress adress) {
+        this.adress = adress;
     }
 }
 

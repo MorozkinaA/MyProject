@@ -26,7 +26,7 @@ public class LoginView extends Composite{
     TextBox loginBox;
 
     @UiField
-    TextBox passwordBox;
+    PasswordTextBox passwordBox;
 
     @UiField
     Label errorLabel;

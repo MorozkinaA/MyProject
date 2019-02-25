@@ -19,11 +19,11 @@
         </g:HorizontalPanel>
         <g:HorizontalPanel spacing="5">
             <g:Label text="Password: "/>
-            <g:TextBox ui:field="passwordBox"/>
+            <g:PasswordTextBox ui:field="passwordBox"/>
         </g:HorizontalPanel>
         <g:HorizontalPanel spacing="5">
-            <g:Label text="Repeat password: "/>
-            <g:TextBox ui:field="confirmPasswordBox"/>
+            <g:Label text="Confirm password : "/>
+            <g:PasswordTextBox ui:field="confirmPasswordBox"/>
         </g:HorizontalPanel>
         <g:Button ui:field="signUpButton" text="Create account"/>
         <g:Label ui:field="errorLabel"/>

@@ -8,9 +8,8 @@ import java.util.Set;
 
 public interface PurchaseDAO {
     void addBookToCart(Map<String, Integer> params);
-    //void selectBooksFromCart(Integer cartId);
     void deleteBookFromCart(Map<String, Integer> params);
-    Set<Adress> selectAddresses(User user);
-    void addAddress(Customer customer);
+    Adress addAddress(Adress adress);
     void createOrder(Order order);
+    void cleanCart(Cart cart);
 }

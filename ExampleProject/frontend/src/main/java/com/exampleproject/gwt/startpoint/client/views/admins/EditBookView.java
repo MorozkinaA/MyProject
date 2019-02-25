@@ -5,6 +5,7 @@ import com.exampleproject.model.shared.Book;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.regexp.shared.RegExp;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -87,12 +88,22 @@ public class EditBookView extends DialogBox {
     }
 
     boolean validation(){
+        RegExp regExpQty = RegExp.compile("[0-9]");
+        RegExp regExpPrice = RegExp.compile("([0-9]*[.])?[0-9]");
         if(priceBox.getText().length() == 0){
             errorLabel.setText("Please, enter price");
             return false;
         }
         else if(qtyBox.getText().length() == 0){
             errorLabel.setText("Please, enter quantity");
+            return false;
+        }
+        else if(!regExpPrice.test(priceBox.getText())){
+            errorLabel.setText("Price should be a number");
+            return false;
+        }
+        else if(!regExpQty.test(qtyBox.getText())){
+            errorLabel.setText("Quantity should be an integer number");
             return false;
         }
         return true;

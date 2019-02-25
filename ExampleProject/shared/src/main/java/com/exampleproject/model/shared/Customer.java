@@ -27,8 +27,8 @@ public class Customer {
     private int discount;
     @Column(name = "customer_email")
     private String email;
-    @ManyToMany(mappedBy = "customers")
-    private Set<Adress> adresses;
+//    @ManyToMany(mappedBy = "customers")
+//    private Set<Adress> adresses;
 
 
     public Customer() {
@@ -72,13 +72,13 @@ public class Customer {
         this.email = email;
     }
 
-    public Set<Adress> getAdresses() {
-        return adresses;
-    }
-
-    public void setAdresses(Set<Adress> adresses) {
-        this.adresses = adresses;
-    }
+//    public Set<Adress> getAdresses() {
+//        return adresses;
+//    }
+//
+//    public void setAdresses(Set<Adress> adresses) {
+//        this.adresses = adresses;
+//    }
 
     @Override
     public String toString() {

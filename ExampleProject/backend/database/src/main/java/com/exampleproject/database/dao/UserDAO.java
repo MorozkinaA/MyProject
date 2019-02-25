@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface UserDAO {
-    void createCustomer(Customer customer);  //creating customer and user
+    User createCustomer(Customer customer);  //creating customer and user
     boolean loginIsFree(String login);   //checks if the login is free(works only with english logins)
     User isLogged(List<String> logInfo);  //checks if login and password are correct
     Cart getCart(User user);

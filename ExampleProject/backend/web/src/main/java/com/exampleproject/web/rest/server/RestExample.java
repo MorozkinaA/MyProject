@@ -8,12 +8,9 @@ import com.exampleproject.model.shared.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
+
 
 @RestController
 public class RestExample {
@@ -29,7 +26,6 @@ public class RestExample {
         this.userService = userService;
         this.purchaseService = purchaseService;
     }
-
 
 
     @RequestMapping("/login")
@@ -48,8 +44,8 @@ public class RestExample {
     }
 
     @RequestMapping("/addCustomer")
-    public void createCustomer(@RequestBody Customer customer){
-        userService.createCustomer(customer);
+    public User createCustomer(@RequestBody Customer customer){
+        return userService.createCustomer(customer);
     }
 
     @RequestMapping("/sort")
@@ -60,11 +56,6 @@ public class RestExample {
     @RequestMapping("/canSign")
     public boolean loginIsFree(@RequestBody String login){
         return userService.loginIsFree(login);
-    }
-
-    @RequestMapping("/bookQty")
-    public Integer selectBookQty(@RequestBody Integer bookId){
-        return bookService.selectBookQty(bookId);
     }
 
     @RequestMapping("/cart")
@@ -107,18 +98,18 @@ public class RestExample {
         bookService.updateBook(book);
     }
 
-//    @RequestMapping("/addresses")
-//    public Set<Adress> selectAddresses(@RequestBody User user) {
-//        return purchaseService.selectAddresses(user);
-//    }
-
     @RequestMapping("/addAddress")
-    public void addAddress(@RequestBody Customer customer){
-        purchaseService.addAddress(customer);
+    public Adress addAddress(@RequestBody Adress adress){
+        return purchaseService.addAddress(adress);
     }
 
     @RequestMapping("/order")
     public void createOrder(@RequestBody Order order){
         purchaseService.createOrder(order);
+    }
+
+    @RequestMapping("/cleanCart")
+    public void cleanCart(@RequestBody Cart cart){
+        purchaseService.cleanCart(cart);
     }
 }

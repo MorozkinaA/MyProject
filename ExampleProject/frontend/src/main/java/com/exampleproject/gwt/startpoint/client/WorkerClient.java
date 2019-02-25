@@ -26,7 +26,7 @@ public interface WorkerClient extends RestService {
 
 	@POST
 	@Path("/addCustomer")
-	void createCustomer(Customer customer,MethodCallback<Void> callback);
+	void createCustomer(Customer customer,MethodCallback<User> callback);
 
 	@POST
 	@Path("/sort")
@@ -35,10 +35,6 @@ public interface WorkerClient extends RestService {
 	@POST
 	@Path("/canSign")
 	void loginIsFree(String login, MethodCallback<Boolean> callback);
-
-	@POST
-	@Path("/bookQty")
-	void selectBookQty(Integer book_id, MethodCallback<Integer> callback);
 
 	@POST
 	@Path("/cart")
@@ -64,13 +60,9 @@ public interface WorkerClient extends RestService {
 	@Path("/deleteBook")
 	void deleteBook(Book book, MethodCallback<Void> callback);
 
-//	@POST
-//	@Path("/addresses")
-//	void selectAddresses(User user, MethodCallback<Set<Adress>> callback);
-
 	@PUT
 	@Path("/addAddress")
-	void addAddress(Customer customer, MethodCallback<Void> callback);
+	void addAddress(Adress adress, MethodCallback<Adress> callback);
 
 	@POST
 	@Path("/customer")
@@ -83,4 +75,8 @@ public interface WorkerClient extends RestService {
 	@PUT
 	@Path("/order")
 	void createOrder(Order order, MethodCallback<Void> callback);
+
+	@PUT
+	@Path("/cleanCart")
+	void cleanCart(Cart cart, MethodCallback<Void> callback);
 }

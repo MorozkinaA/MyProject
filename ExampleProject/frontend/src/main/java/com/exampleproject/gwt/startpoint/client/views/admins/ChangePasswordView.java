@@ -100,7 +100,7 @@ public class ChangePasswordView extends DialogBox {
 
                 @Override
                 public void onSuccess(Method method, Boolean aBoolean) {
-                    if (!aBoolean) {
+                    if (aBoolean) {
                         errorLabel.setText("Login doesn't exist");
                         res = false;
                     }

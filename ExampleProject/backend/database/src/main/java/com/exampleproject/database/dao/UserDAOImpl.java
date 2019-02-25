@@ -1,13 +1,11 @@
 package com.exampleproject.database.dao;
 
 
-import com.exampleproject.model.shared.Book;
-import com.exampleproject.model.shared.Cart;
-import com.exampleproject.model.shared.Customer;
-import com.exampleproject.model.shared.User;
+import com.exampleproject.model.shared.*;
 import org.hibernate.*;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.ReaderEditor;
 import org.springframework.jdbc.object.SqlQuery;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
@@ -18,7 +16,6 @@ import java.util.Map;
 
 
 @Repository("userDAO")
-@Component
 @Transactional
 public class UserDAOImpl extends BasicDAO implements UserDAO {
 
@@ -27,12 +24,16 @@ public class UserDAOImpl extends BasicDAO implements UserDAO {
         super(sessionFactory);
     }
 
-    public void createCustomer(Customer customer) {
+    public User createCustomer(Customer customer) {
         User user = customer.getUser();
         persist(user);
         persist(customer);
         Cart cart = new Cart(customer, 0);
         persist(cart);
+        Criteria criteria = getSession().createCriteria(User.class);
+        criteria.add(Restrictions.eq("login", user.getLogin()));
+        User returnedUser = (User)criteria.uniqueResult();
+        return returnedUser;
     }
 
     public boolean loginIsFree(String login) {

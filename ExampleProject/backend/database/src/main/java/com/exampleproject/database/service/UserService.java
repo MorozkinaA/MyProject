@@ -11,7 +11,7 @@ import java.util.Map;
 
 @Component
 public interface UserService {
-    void createCustomer(Customer customer);
+    User createCustomer(Customer customer);
     boolean loginIsFree(String login);
     User isLogged(List<String> loginInfo);
     Cart getCart(User user);

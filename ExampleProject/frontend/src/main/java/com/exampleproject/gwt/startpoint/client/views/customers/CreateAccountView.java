@@ -6,7 +6,6 @@ import com.exampleproject.model.shared.Customer;
 import com.exampleproject.model.shared.User;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.regexp.shared.MatchResult;
 import com.google.gwt.regexp.shared.RegExp;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -37,10 +36,10 @@ public class CreateAccountView extends Composite {
     TextBox loginBox;
 
     @UiField
-    TextBox passwordBox;
+    PasswordTextBox passwordBox;
 
     @UiField
-    TextBox confirmPasswordBox;
+    PasswordTextBox confirmPasswordBox;
 
     @UiField
     Label errorLabel;
@@ -52,18 +51,18 @@ public class CreateAccountView extends Composite {
     @UiHandler("signUpButton")
     void doSignUp(ClickEvent event){
         if(validation()){
-            User user = new User("customer", nameBox.getText(), surnameBox.getText(), loginBox.getText(), Integer.toString(passwordBox.getText().hashCode()));
+            User user = new User( nameBox.getText(), surnameBox.getText(), loginBox.getText(), Integer.toString(passwordBox.getText().hashCode()), "customer");
             Customer customer = new Customer(user, 0, emailBox.getText());
-            client.createCustomer(customer, new MethodCallback<Void>() {
+            client.createCustomer(customer, new MethodCallback<User>() {
                 @Override
                 public void onFailure(Method method, Throwable throwable) {
                     Window.alert(throwable.toString() + "\n" + throwable.getMessage());
                 }
 
                 @Override
-                public void onSuccess(Method method, Void aVoid) {
+                public void onSuccess(Method method, User u) {
                     RootPanel.get().clear();
-                    RootPanel.get().add(new MainView(user));
+                    RootPanel.get().add(new MainView(u));
                 }
             });
         }
@@ -78,7 +77,7 @@ public class CreateAccountView extends Composite {
     boolean validation(){
         String validEmail = "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$";
         RegExp regExpEmail = RegExp.compile(validEmail);
-        String validLogin = "^a-zA-Z0-9_.$";
+        String validLogin = "[a-zA-Z0-9]";
         RegExp regExpLogin = RegExp.compile(validLogin);
         if(nameBox.getText().length() == 0){
             errorLabel.setText("Please, enter name");
@@ -126,7 +125,7 @@ public class CreateAccountView extends Composite {
         }
         else if(!regExpLogin.test(loginBox.getText())){
             errorLabel.setText("Login should contain only numbers, " + "\n" +
-                    "upper- and lower-case latin letters and symbols: . _");
+                    "upper- and lower-case latin letters");
             valid = false;
         }
         else{

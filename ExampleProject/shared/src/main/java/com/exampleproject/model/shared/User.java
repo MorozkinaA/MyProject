@@ -11,14 +11,11 @@ import javax.persistence.*;
 @Scope(value = BeanDefinition.SCOPE_PROTOTYPE)
 @Entity
 @Table(name = "users")
-@JsonIgnoreProperties("customer")
 public class User {
     @Id
     @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name = "role")
-    private String role;
     @Column(name = "user_name")
     private String name;
     @Column(name = "user_surname")
@@ -27,6 +24,8 @@ public class User {
     private String login;
     @Column(name = "user_password")
     private String password;
+    @Column(name = "role")
+    private String role;
 //
 //    @OneToOne(optional = false, mappedBy = "user")
 //    private Customer customer;
@@ -34,12 +33,12 @@ public class User {
     public User() {
     }
 
-    public User(String role, String name, String surname, String login, String password) {
-        this.role = role;
+    public User(String name, String surname, String login, String password, String role) {
         this.name = name;
         this.surname = surname;
         this.login = login;
         this.password = password;
+        this.role = role;
     }
 
     public int getId() {
@@ -48,14 +47,6 @@ public class User {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
     }
 
     public String getName() {
@@ -88,6 +79,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
 //    public Customer getCustomer() {

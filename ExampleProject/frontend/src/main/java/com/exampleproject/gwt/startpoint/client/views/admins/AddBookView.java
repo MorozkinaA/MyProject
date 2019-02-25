@@ -87,9 +87,13 @@ public class AddBookView extends DialogBox {
                     authors.add(new Author(authorsNameBox.getText(), authorsSurnameBox.getText()));
                     Set<Genre> genres = new HashSet<>();
                     genres.add(new Genre(genreBox.getText()));
+                    String photo = photoBox.getText();
+                    if(photo.length() == 0){
+                        photo = "https://smvape.com.ua/wp-content/uploads/2018/12/no_photo.jpg";
+                    }
                     Book book = new Book(titleBox.getText(), publisherBox.getText(), Integer.parseInt(pagesBox.getText()),
                             descriptionBox.getText(), Float.parseFloat(priceBox.getText()),
-                            Integer.parseInt(qtyBox.getText()), photoBox.getText(), genres, authors);
+                            Integer.parseInt(qtyBox.getText()), photo, genres, authors);
                     client.addBook(book, new MethodCallback<Void>() {
                         @Override
                         public void onFailure(Method method, Throwable throwable) {
@@ -98,7 +102,7 @@ public class AddBookView extends DialogBox {
 
                         @Override
                         public void onSuccess(Method method, Void aVoid) {
-                            Window.alert("Book was added");
+                            //Window.alert("Book was added");
                             hide(true);
                         }
                     });

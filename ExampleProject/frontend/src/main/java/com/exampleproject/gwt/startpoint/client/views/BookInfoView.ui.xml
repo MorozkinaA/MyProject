@@ -17,8 +17,13 @@
                     <g:Label ui:field="publisher"/>
                 </g:HorizontalPanel>
                 <g:HorizontalPanel >
-                    <g:Label text="pages: "/>
+                    <g:Label text="Pages: "/>
                     <g:Label ui:field="pages"/>
+                </g:HorizontalPanel>
+                <g:HorizontalPanel>
+                    <g:Label text="Price: "/>
+                    <g:Label ui:field="price"/>
+                    <g:Label text=" euro"/>
                 </g:HorizontalPanel>
                 <g:Label text="Description: "/>
                 <g:Label ui:field="description"/>
@@ -26,8 +31,6 @@
                 <g:Button ui:field="toCart" text="Add to cart" visible="false"/>
                 <g:Button ui:field="editBook" text="Edit Book" visible="false"/>
                 <g:Button ui:field="deleteBook" text="Delete Book" visible="false"/>
-
-
             </g:VerticalPanel>
         </g:HorizontalPanel>
 

@@ -44,6 +44,9 @@ public class BookInfoView extends DialogBox {
     Label pages;
 
     @UiField
+    Label price;
+
+    @UiField
     Label description;
 
     @UiField
@@ -63,10 +66,6 @@ public class BookInfoView extends DialogBox {
         hide();
     }
 
-    @UiHandler("toCart")
-    void addBookToCart(ClickEvent event){
-
-    }
 
     Book book;
     User user;
@@ -89,10 +88,11 @@ public class BookInfoView extends DialogBox {
         booksPhoto.setUrl(book.getPhotoUrl());
         booksPhoto.setPixelSize(250, 400);
         title.setText(book.getTitle());
-        author.setText(book.getAuthors().toString());
-        genre.setText(book.getGenres().toString());
+        author.setText(book.authorsToString());
+        genre.setText(book.genresToString());
         publisher.setText(book.getPublisher());
         pages.setText(Integer.toString(book.getPages()));
+        price.setText(Float.toString(book.getPrice()));
         description.setText(book.getDescription());
 
         if(user.getRole().equals("customer")){
@@ -118,22 +118,12 @@ public class BookInfoView extends DialogBox {
     }
 
     void opportunityToAddBookToCart(Book book){
-        client.selectBookQty(book.getId(), new MethodCallback<Integer>() {
-            @Override
-            public void onFailure(Method method, Throwable throwable) {
-                Window.alert(throwable.toString() + "\n" + throwable.getMessage());
-            }
-
-            @Override
-            public void onSuccess(Method method, Integer qty) {
-                if(qty > 0){
-                    toCart.setVisible(true);
-                }
-                else{
-                    canBuy.setText("Not available");
-                }
-            }
-        });
+        if(book.getQty() > 0){
+            toCart.setVisible(true);
+        }
+        else{
+            canBuy.setText("Not available");
+        }
     }
 
 
@@ -182,7 +172,7 @@ public class BookInfoView extends DialogBox {
 
                     @Override
                     public void onSuccess(Method method, Void aVoid) {
-                        Window.alert("Book was successfully deleted");
+                        hide();
                     }
                 });
             }

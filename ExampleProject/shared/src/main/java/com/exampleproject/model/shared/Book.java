@@ -169,4 +169,20 @@ public class Book {
                 ", genres=" + genres +
                 ", authors=" + authors ;
     }
+
+    public String authorsToString(){
+        String res = "";
+        for(Author a : authors){
+            res += a.getName() + " " + a.getSurname() + "\n";
+        }
+        return res;
+    }
+
+    public String genresToString(){
+        String res = "";
+        for(Genre g : genres){
+            res += g.getGenre() +", ";
+        }
+        return res;
+    }
 }

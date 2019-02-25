@@ -22,8 +22,8 @@ public class UserServiceImpl implements UserService {
         this.userDAO = userDAO;
     }
 
-    public void createCustomer(Customer customer) {
-        userDAO.createCustomer(customer);
+    public User createCustomer(Customer customer) {
+        return userDAO.createCustomer(customer);
     }
 
     public boolean loginIsFree(String login) {

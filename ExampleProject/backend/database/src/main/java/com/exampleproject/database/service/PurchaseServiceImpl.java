@@ -2,10 +2,7 @@ package com.exampleproject.database.service;
 
 
 import com.exampleproject.database.dao.PurchaseDAO;
-import com.exampleproject.model.shared.Adress;
-import com.exampleproject.model.shared.Customer;
-import com.exampleproject.model.shared.Order;
-import com.exampleproject.model.shared.User;
+import com.exampleproject.model.shared.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,15 +29,16 @@ public class PurchaseServiceImpl implements PurchaseService {
         purchaseDAO.deleteBookFromCart(params);
     }
 
-//    public Set<Adress> selectAddresses(User user) {
-//        return purchaseDAO.selectAddresses(user);
-//    }
 
-    public void addAddress(Customer customer) {
-        purchaseDAO.addAddress(customer);
+    public Adress addAddress(Adress adress) {
+        return purchaseDAO.addAddress(adress);
     }
 
     public void createOrder(Order order) {
         purchaseDAO.createOrder(order);
+    }
+
+    public void cleanCart(Cart cart) {
+        purchaseDAO.cleanCart(cart);
     }
 }

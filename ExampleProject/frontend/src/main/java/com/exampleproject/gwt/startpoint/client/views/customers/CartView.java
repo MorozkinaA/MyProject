@@ -38,18 +38,6 @@ public class CartView extends DialogBox {
     @UiField
     Button placeOrder;
 
-//    @UiField
-//    Button addAddress;
-//
-//    @UiField
-//    Button chooseAddress;
-//
-//    @UiField
-//    VerticalPanel addressPanel;
-//
-//    @UiField
-//    Button confirmOrder;
-
     @UiHandler("close")
     void closeView(ClickEvent event){
         hide();
@@ -70,14 +58,12 @@ public class CartView extends DialogBox {
     @Override
     public void setWidget(Widget w) {
         super.setWidget(w);
-        setAnimationEnabled(true);
-        setText("Cart");
         addCartPainting();
-        setSize("600", "300");
-        center();
     }
 
     void addCartPainting(){
+        setAnimationEnabled(true);
+        setText("Cart");
         client.getCart(user, new MethodCallback<Cart>() {
             @Override
             public void onFailure(Method method, Throwable throwable) {
@@ -86,32 +72,57 @@ public class CartView extends DialogBox {
 
             @Override
             public void onSuccess(Method method, Cart cart) {
-                if(cart.getBooks().size() == 0){
+                if(cart.getPrice() == 0){
                     Label label = new Label("Your cart is empty");
                     priceLabel.setText("0");
                     booksPanel.add(label);
                 }
                 else{
                     priceLabel.setText(Float.toString(cart.getPrice()));
-                    books.addAll(cart.getBooks());
-                    table = Table.booksTable();
-                    placeOrder.setVisible(true);
-                    placeOrder.addClickHandler(new ClickHandler() {
-                        @Override
-                        public void onClick(ClickEvent clickEvent) {
-                            hide();
-                            new OrderView(user, cart);
-                        }
-                    });
-
-                    addDeletePossibility(cart);
-
-                    table.setRowCount(cart.getBooks().size(), true);
-                    table.setRowData(0, books);
-                    booksPanel.add(table);
+                    addTable(cart);
                 }
             }
         });
+        setSize("600", "300");
+        center();
+    }
+
+    void addTable(Cart cart){
+        books.clear();
+        books.addAll(cart.getBooks());
+        table = Table.booksTable();
+        //List<Book> b = new ArrayList<>();
+        //table.setRowData(0, b);
+        placeOrder.setVisible(true);
+        placeOrder.addClickHandler(new ClickHandler() {
+            @Override
+            public void onClick(ClickEvent clickEvent) {
+                hide();
+                OrderView orderView = new OrderView(user, cart);
+                orderView.getConfirmOrder().addClickHandler(new ClickHandler() {
+                    @Override
+                    public void onClick(ClickEvent clickEvent) {
+
+                        client.cleanCart(cart, new MethodCallback<Void>() {
+                            @Override
+                            public void onFailure(Method method, Throwable throwable) {
+                                Window.alert(throwable.toString() + "\n" + throwable.getMessage());
+                            }
+
+                            @Override
+                            public void onSuccess(Method method, Void aVoid) {
+                            }
+                        });
+                    }
+                });
+            }
+        });
+
+        addDeletePossibility(cart);
+
+        table.setRowCount(cart.getBooks().size(), true);
+        table.setRowData(0, books);
+        booksPanel.add(table);
     }
 
     void addDeletePossibility(Cart cart){
@@ -139,11 +150,15 @@ public class CartView extends DialogBox {
 
                                 @Override
                                 public void onSuccess(Method method, Void aVoid) {
+                                    //clear();
+                                    //addCartPainting();
+                                    cart.getBooks().remove(selected);
+                                    table.redraw();
                                     table.removeFromParent();
-                                    booksPanel.add(table);
+                                    addTable(cart);
+                                    priceLabel.setText(Float.toString(cart.getPrice()));
                                 }
                             });
-                            table.redraw();
                         }
                     }
                 });

@@ -12,7 +12,6 @@ public interface BookService {
     List<Genre> selectGenres();
     List<Book> selectBooks();
     List<Book> sortBooks(Map<String, String> params);
-    Integer selectBookQty(Integer bookId);
     void addBook(Book book);
     void deleteBook(Book book);
     void updateBook(Book book);

@@ -3,6 +3,7 @@ package com.exampleproject.database.dao;
 
 import com.exampleproject.model.shared.*;
 import org.hibernate.Criteria;
+import org.hibernate.NonUniqueResultException;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,6 @@ import java.util.Map;
 import java.util.Set;
 
 @Repository("purchaseDAO")
-@Component
 @Transactional
 public class PurchaseDAOImpl extends BasicDAO implements PurchaseDAO{
 
@@ -69,22 +69,41 @@ public class PurchaseDAOImpl extends BasicDAO implements PurchaseDAO{
         update(cart);
     }
 
-    public Set<Adress> selectAddresses(User user) {
-        Criteria criteria = getSession().createCriteria(Customer.class);
-        criteria.add(Restrictions.eq("user", user));
-        Customer customer = (Customer)criteria.uniqueResult();
-        return customer.getAdresses();
+//    public Set<Adress> selectAddresses(User user) {
+//        Criteria criteria = getSession().createCriteria(Customer.class);
+//        criteria.add(Restrictions.eq("user", user));
+//        Customer customer = (Customer)criteria.uniqueResult();
+//        return customer.getAdresses();
+//    }
+//
+    public Adress addAddress(Adress adress) {
+        Adress result = null;
+        result = (Adress)getAddress(adress).uniqueResult();
+        if(result == null){
+            persist(adress);
+            result = (Adress)getAddress(adress).uniqueResult();
+        }
+        return result;
     }
 
-    public void addAddress(Customer customer) {
-        Set<Adress> adresses = customer.getAdresses();
-        for(Adress a : adresses){
-            persist(a);
-        }
-        update(customer);
+    Criteria getAddress(Adress adress){
+        Criteria criteria = getSession().createCriteria(Adress.class);
+        criteria.add(Restrictions.eq("country", adress.getCountry()));
+        criteria.add(Restrictions.eq("city", adress.getCity()));
+        criteria.add(Restrictions.eq("street", adress.getStreet()));
+        criteria.add(Restrictions.eq("house", adress.getHouse()));
+        criteria.add(Restrictions.eq("flat", adress.getFlat()));
+        criteria.add(Restrictions.eq("postIndex", adress.getPostIndex()));
+        return criteria;
     }
 
     public void createOrder(Order order) {
         persist(order);
+    }
+
+    public void cleanCart(Cart cart) {
+        cart.getBooks().clear();
+        cart.setPrice(0);
+        update(cart);
     }
 }
